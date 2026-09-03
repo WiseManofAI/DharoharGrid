@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akashvani — DharoharGrid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Philosopher:ital@1&family=Yatra+One&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg: #050403;
+    --bg-elev: #0d0a06;
+    --bg-elev-2: #141009;
+    --gold: #caa04d;
+    --gold-bright: #f0cf83;
+    --gold-dim: #6b5325;
+    --gold-line: rgba(202, 160, 77, 0.28);
+    --ink: #efe9dc;
+    --ink-dim: #93897a;
+    --ink-faint: #5c564a;
+    --serif: "Cinzel", serif;
+    --serif-soft: "Cormorant Garamond", serif;
+    --sans: "Manrope", sans-serif;
+    --radius-s: 3px;
+    --radius-m: 6px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  ::selection{ background: var(--gold-dim); color: var(--ink); }
+
+  a{ color: inherit; }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline: 1px solid var(--gold-bright);
+    outline-offset: 3px;
+  }
+
+  /* ---------- background layers ---------- */
+
+  #particle-canvas{
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .mandala-plate{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: min(150vw, 150vh);
+    height: min(150vw, 150vh);
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    filter: invert(1) brightness(0.85) sepia(0.55) saturate(2.4) hue-rotate(-8deg);
+    -webkit-mask-image: radial-gradient(circle, #000 45%, transparent 72%);
+    mask-image: radial-gradient(circle, #000 45%, transparent 72%);
+    animation: rotate-plate 220s linear infinite;
+  }
+
+  @keyframes rotate-plate{
+    from{ transform: translate(-50%, -50%) rotate(0deg); }
+    to{ transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .mandala-plate{ animation: none; }
+  }
+
+  /* ---------- layout scaffolding ---------- */
+
+  .page{
+    position: relative;
+    z-index: 1;
+  }
+
+  .topbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px clamp(20px, 4vw, 48px);
+    background: linear-gradient(to bottom, rgba(5,4,3,0.85), transparent);
+    pointer-events: none;
+  }
+
+  .topbar > *{ pointer-events: auto; }
+
+  .back-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+    padding: 9px 16px 9px 12px;
+    border-radius: 999px;
+    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  }
+
+  .back-btn svg{
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    transition: transform 0.25s ease;
+  }
+
+  .back-btn:hover{
+    color: var(--gold-bright);
+    border-color: var(--gold-line);
+    background: rgba(202, 160, 77, 0.06);
+  }
+
+  .back-btn:hover svg{ transform: translateX(-3px); }
+
+  .mark{
+    font-family: var(--serif);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 140px 24px 80px;
+    position: relative;
+  }
+
+  .hero-eyebrow{
+    font-family: var(--serif-soft);
+    font-style: italic;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: var(--gold);
+    margin: 0 0 18px;
+    opacity: 0.85;
+  }
+
+  .hero h1{
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(3rem, 9vw, 7.2rem);
+    line-height: 1.02;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    position: relative;
+    --mx: 50%;
+    --my: 50%;
+  }
+
+  .hero h1 .glow-layer{
+    background-image: radial-gradient(
+      circle 280px at var(--mx) var(--my),
+      var(--gold-bright) 0%,
+      rgba(240, 207, 131, 0.55) 28%,
+      transparent 62%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    opacity: 0;
+  }
+
+  .hero h1:hover .glow-layer,
+  .hero h1.touched .glow-layer{
+    opacity: 1;
+  }
+
+  .hero h1 .static-word,
+  .hero h1 .glow-layer{
+    text-shadow: none;
+  }
+
+  .shift-word{
+    display: inline-block;
+    color: var(--gold-bright);
+    transition: opacity 0.35s ease, filter 0.35s ease;
+    text-shadow: 0 0 26px rgba(240, 207, 131, 0.35);
+  }
+
+  .shift-word.fading{
+    opacity: 0;
+    filter: blur(6px);
+  }
+
+  .font-cinzel{ font-family: "Cinzel", serif; font-weight: 600; }
+  .font-yatra{ font-family: "Yatra One", cursive; font-weight: 400; }
+  .font-cormorant{ font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 500; }
+  .font-philosopher{ font-family: "Philosopher", sans-serif; font-style: italic; font-weight: 400; }
+
+  .hero-sub{
+    max-width: 46ch;
+    margin: 30px 0 0;
+    font-family: var(--sans);
+    font-size: clamp(0.98rem, 1.4vw, 1.1rem);
+    color: var(--ink-dim);
+    font-weight: 400;
+  }
+
+  /* ask bar */
+
+  .ask-bar{
+    margin-top: 46px;
+    width: min(620px, 90vw);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(13, 10, 6, 0.72);
+    border: 1px solid var(--gold-line);
+    border-radius: 999px;
+    padding: 8px 8px 8px 22px;
+    backdrop-filter: blur(6px);
+  }
+
+  .ask-bar input{
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    padding: 10px 0;
+  }
+
+  .ask-bar input::placeholder{ color: var(--ink-faint); }
+  .ask-bar input:focus{ outline: none; }
+
+  .ask-send{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(160deg, var(--gold-bright), var(--gold-dim));
+    color: #1a1409;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .ask-send svg{ width: 17px; height: 17px; }
+
+  .ask-send:hover{
+    transform: scale(1.06);
+    box-shadow: 0 0 22px rgba(240, 207, 131, 0.45);
+  }
+
+  .ask-send:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .ask-feed{
+    width: min(620px, 90vw);
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ask-feed:empty{ display: none; }
+
+  .ask-msg{
+    text-align: left;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    border-radius: var(--radius-m);
+    animation: msg-in 0.35s ease;
+  }
+
+  @keyframes msg-in{
+    from{ opacity: 0; transform: translateY(6px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  .ask-msg.user{
+    background: rgba(255,255,255,0.04);
+    color: var(--ink);
+    align-self: flex-end;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .ask-msg.ai{
+    background: rgba(202, 160, 77, 0.07);
+    border: 1px solid var(--gold-line);
+    color: var(--ink);
+  }
+
+  .ask-msg.ai .ai-label{
+    display: block;
+    font-family: var(--serif-soft);
+    font-style: italic;
+    color: var(--gold);
+    font-size: 0.82rem;
+    margin-bottom: 4px;
+  }
+
+  .ask-msg .demo-tag{
+    display: block;
+    margin-top: 6px;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+  }
+
+  .scroll-hint{
+    position: absolute;
+    bottom: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink-faint);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  .scroll-hint svg{
+    width: 13px; height: 13px;
+    stroke: var(--ink-faint);
+  }
+
+  /* ---------- divider ---------- */
+
+  .motif-divider{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 0 auto;
+    width: min(340px, 70vw);
+    padding: 0 24px;
+  }
+
+  .motif-divider .line{
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-line));
+  }
+
+  .motif-divider .line.right{
+    background: linear-gradient(to left, transparent, var(--gold-line));
+  }
+
+  .motif-divider .diamond{
+    width: 7px; height: 7px;
+    background: var(--gold-dim);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ---------- dashboard section ---------- */
+
+  .dashboard{
+    position: relative;
+    padding: 90px clamp(20px, 5vw, 64px) 120px;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .dash-head{
+    text-align: center;
+    max-width: 56ch;
+    margin: 0 auto 64px;
+  }
+
+  .dash-head h2{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+
+  .dash-head p{
+    color: var(--ink-dim);
+    font-size: 0.98rem;
+    margin: 0;
+  }
+
+  .dash-grid{
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 26px;
+  }
+
+  @media (max-width: 880px){
+    .dash-grid{ grid-template-columns: 1fr; }
+  }
+
+  .panel{
+    background: linear-gradient(165deg, var(--bg-elev), var(--bg-elev-2));
+    border: 1px solid rgba(202, 160, 77, 0.14);
+    border-radius: var(--radius-m);
+    padding: 26px 28px 28px;
+  }
+
+  .panel-head{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .panel-head h3{
+    font-family: var(--serif-soft);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.28rem;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .sample-tag{
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* node explorer panel */
+
+  .node-tabs{
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 18px;
+  }
+
+  .node-tab{
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-family: var(--sans);
+    font-size: 0.83rem;
+    padding: 8px 4px;
+    margin-right: 18px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .node-tab::after{
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 1.5px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.25s ease;
+  }
+
+  .node-tab[aria-selected="true"]{ color: var(--gold-bright); }
+  .node-tab[aria-selected="true"]::after{ transform: scaleX(1); }
+  .node-tab:hover{ color: var(--ink); }
+
+  .node-panel-title{
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+
+  .node-panel-loc{
+    color: var(--gold);
+    font-size: 0.78rem;
+    margin: 0 0 16px;
+  }
+
+  .node-body{ display: none; font-size: 0.9rem; color: var(--ink-dim); line-height: 1.7; }
+  .node-body.active{ display: block; }
+
+  .node-body .chip-row{
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+  }
+
+  .chip{
+    font-size: 0.72rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(202,160,77,0.25);
+    color: var(--gold);
+  }
+
+  .synapse-list{ list-style: none; margin: 0; padding: 0; }
+
+  .synapse-list li{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.87rem;
+    color: var(--ink-dim);
+  }
+
+  .synapse-list li:last-child{ border-bottom: none; }
+
+  .synapse-list .arrow{ color: var(--gold-dim); flex-shrink: 0; }
+  .synapse-list strong{ color: var(--ink); font-weight: 500; }
+
+  .source-list{ margin: 0; padding: 0; list-style: none; }
+  .source-list li{
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .source-list li:last-child{ border-bottom: none; }
+  .source-list .src-name{ color: var(--ink); }
+
+  /* narration panel */
+
+  .lang-row{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .lang-pill{
+    font-size: 0.78rem;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: transparent;
+    color: var(--ink-dim);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--sans);
+  }
+
+  .lang-pill[aria-pressed="true"]{
+    border-color: var(--gold);
+    color: var(--gold-bright);
+    background: rgba(202,160,77,0.08);
+  }
+
+  .player{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .play-btn{
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-line);
+    background: rgba(202,160,77,0.06);
+    color: var(--gold-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+  }
+
+  .play-btn:hover{ background: rgba(202,160,77,0.14); }
+  .play-btn svg{ width: 16px; height: 16px; }
+
+  .track-info{ flex: 1; min-width: 0; }
+
+  .track-title{ font-size: 0.87rem; color: var(--ink); margin: 0 0 8px; }
+
+  .track-bar{
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .track-fill{
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, var(--gold-dim), var(--gold-bright));
+    transition: width 0.2s linear;
+  }
+
+  .track-time{
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    margin-top: 6px;
+  }
+
+  /* community panel */
+
+  .contrib-list{ list-style: none; margin: 0; padding: 0; }
+
+  .contrib-list li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .contrib-list li:last-child{ border-bottom: none; }
+
+  .contrib-name{ font-size: 0.87rem; color: var(--ink); }
+  .contrib-loc{ font-size: 0.76rem; color: var(--ink-faint); display: block; margin-top: 2px; }
+
+  .status-badge{
+    font-size: 0.68rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .status-verified{ background: rgba(120, 180, 130, 0.12); color: #9fcf9f; border: 1px solid rgba(120,180,130,0.3); }
+  .status-community{ background: rgba(202,160,77,0.1); color: var(--gold-bright); border: 1px solid var(--gold-line); }
+  .status-unverified{ background: rgba(255,255,255,0.05); color: var(--ink-dim); border: 1px solid rgba(255,255,255,0.1); }
+  .status-disputed{ background: rgba(200,90,80,0.12); color: #e2948a; border: 1px solid rgba(200,90,80,0.3); }
+
+  /* map/synapse svg panel */
+
+  .synapse-graph{ width: 100%; height: auto; margin-bottom: 4px; }
+  .synapse-graph text{ font-family: var(--sans); }
+
+  footer{
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 24px 56px;
+    color: var(--ink-faint);
+    font-size: 0.76rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  @media (max-width: 560px){
+    .dash-grid{ gap: 18px; }
+    .panel{ padding: 22px 20px 24px; }
+  }
+
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+<img class="mandala-plate" src="mandala.svg" alt="" aria-hidden="true">
+
+<div class="page">
+
+  <header class="topbar">
+    <a class="back-btn" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Back
+    </a>
+    <span class="mark">DHAROHARGRID</span>
+  </header>
+
+  <section class="hero">
+    <p class="hero-eyebrow">the voice of the Spatial Cultural Knowledge Graph</p>
+    <h1 id="heroTitle">
+      <span class="static-word">Ask </span><span class="shift-word font-cinzel" id="shiftWord">Akashvani</span>
+      <span class="glow-layer" aria-hidden="true">Ask Akashvani</span>
+    </h1>
+    <p class="hero-sub">Akashvani is DharoharGrid's conversational docent — grounded only in what's already documented, it narrates the living heritage of India as you move through it.</p>
+
+    <form class="ask-bar" id="askForm">
+      <input type="text" id="askInput" placeholder="Ask about a monument, craft, or story…" autocomplete="off">
+      <button type="submit" class="ask-send" aria-label="Send question">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
+      </button>
+    </form>
+
+    <div class="ask-feed" id="askFeed"></div>
+
+    <div class="scroll-hint">
+      <span>THE DASHBOARD</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+    </div>
+  </section>
+
+  <div class="motif-divider"><span class="line"></span><span class="diamond"></span><span class="line right"></span></div>
+
+  <section class="dashboard">
+    <div class="dash-head">
+      <h2>What Akashvani is working with</h2>
+      <p>A preview of the engine behind the docent — geocoded nodes, cross-regional lineages, multilingual narration, and community-verified sources.</p>
+    </div>
+
+    <div class="dash-grid">
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Node explorer</h3>
+          <span class="sample-tag">sample node</span>
+        </div>
+        <p class="node-panel-title">Amber Fort</p>
+        <p class="node-panel-loc">Amer, Rajasthan · tangible heritage node</p>
+        <div class="node-tabs" role="tablist">
+          <button class="node-tab" role="tab" aria-selected="true" data-tab="overview">Overview</button>
+          <button class="node-tab" role="tab" aria-selected="false" data-tab="story">Micro-story</button>
+          <button class="node-tab" role="tab" aria-selected="false" data-tab="synapses">Synapses</button>
+          <button class="node-tab" role="tab" aria-selected="false" data-tab="sources">Sources</button>
+        </div>
+
+        <div class="node-body active" data-body="overview">
+          Built from pale yellow and pink sandstone overlooking Maota Lake, the fort blends Rajput and Mughal architectural language across four linked courtyards.
+          <div class="chip-row">
+            <span class="chip">16th century</span>
+            <span class="chip">Rajput-Mughal</span>
+            <span class="chip">UNESCO listed</span>
+          </div>
+        </div>
+
+        <div class="node-body" data-body="story">
+          Akashvani generates a short spoken passage for each node on approach — grounded in the sources below, never invented — timed to how long a visitor typically lingers at that spot.
+        </div>
+
+        <div class="node-body" data-body="synapses">
+          <ul class="synapse-list">
+            <li><span class="arrow">↳</span> <strong>Sheesh Mahal mirror work</strong> — linked to Mughal glasswork traditions in Agra</li>
+            <li><span class="arrow">↳</span> <strong>Rajput miniature painting</strong> — linked to Persian court painting lineage</li>
+            <li><span class="arrow">↳</span> <strong>Amer sandstone quarrying</strong> — linked to regional stonemason guild records</li>
+          </ul>
+        </div>
+
+        <div class="node-body" data-body="sources">
+          <ul class="source-list">
+            <li><span class="src-name">ASI monument dossier</span> — Amber Fort, listing no. N-RJ-A38</li>
+            <li><span class="src-name">Rajasthan State Archives</span> — Amer court records, 16th–18th c.</li>
+            <li><span class="src-name">Community submission</span> — pending verification</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Narration</h3>
+        </div>
+        <div class="lang-row" id="langRow">
+          <button class="lang-pill" aria-pressed="true" data-lang="English">English</button>
+          <button class="lang-pill" aria-pressed="false" data-lang="Hindi">हिन्दी</button>
+          <button class="lang-pill" aria-pressed="false" data-lang="Rajasthani">Rajasthani</button>
+        </div>
+        <div class="player">
+          <button class="play-btn" id="playBtn" aria-label="Play narration" aria-pressed="false">
+            <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div class="track-info">
+            <p class="track-title" id="trackTitle">Amber Fort — micro-story, English</p>
+            <div class="track-bar"><div class="track-fill" id="trackFill"></div></div>
+            <p class="track-time" id="trackTime">0:00 / 0:42</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Cross-regional synapses</h3>
+          <span class="sample-tag">illustrative</span>
+        </div>
+        <svg class="synapse-graph" viewBox="0 0 420 200" role="img" aria-label="Diagram linking Amber Fort mirror work to Agra glasswork and Persian court painting">
+          <line x1="80" y1="100" x2="210" y2="55" stroke="rgba(202,160,77,0.35)" stroke-width="1"/>
+          <line x1="80" y1="100" x2="210" y2="150" stroke="rgba(202,160,77,0.35)" stroke-width="1"/>
+          <line x1="210" y1="55" x2="345" y2="90" stroke="rgba(202,160,77,0.35)" stroke-width="1"/>
+          <line x1="210" y1="150" x2="345" y2="130" stroke="rgba(202,160,77,0.2)" stroke-width="1" stroke-dasharray="3 4"/>
+          <circle cx="80" cy="100" r="6" fill="#f0cf83"/>
+          <circle cx="210" cy="55" r="5" fill="#caa04d"/>
+          <circle cx="210" cy="150" r="5" fill="#caa04d"/>
+          <circle cx="345" cy="90" r="4.5" fill="#6b5325"/>
+          <circle cx="345" cy="130" r="4.5" fill="#6b5325"/>
+          <text x="80" y="122" fill="#efe9dc" font-size="11" text-anchor="middle">Amber Fort</text>
+          <text x="210" y="42" fill="#93897a" font-size="10" text-anchor="middle">Sheesh Mahal</text>
+          <text x="210" y="169" fill="#93897a" font-size="10" text-anchor="middle">Miniature painting</text>
+          <text x="345" y="76" fill="#5c564a" font-size="9.5" text-anchor="middle">Agra glasswork</text>
+          <text x="345" y="146" fill="#5c564a" font-size="9.5" text-anchor="middle">Persian court art</text>
+        </svg>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Community contributions</h3>
+          <span class="sample-tag">sample queue</span>
+        </div>
+        <ul class="contrib-list">
+          <li>
+            <span>
+              <span class="contrib-name">Panna Meena ka Kund</span>
+              <span class="contrib-loc">stepwell · Amer, Rajasthan</span>
+            </span>
+            <span class="status-badge status-verified">Verified</span>
+          </li>
+          <li>
+            <span>
+              <span class="contrib-name">Bagru block-print workshop</span>
+              <span class="contrib-loc">craft node · Bagru, Rajasthan</span>
+            </span>
+            <span class="status-badge status-community">Community</span>
+          </li>
+          <li>
+            <span>
+              <span class="contrib-name">Local oral history — Amer bazaar</span>
+              <span class="contrib-loc">intangible · submitted this week</span>
+            </span>
+            <span class="status-badge status-unverified">Unverified</span>
+          </li>
+          <li>
+            <span>
+              <span class="contrib-name">Naila fort founding date</span>
+              <span class="contrib-loc">disputed against ASI record</span>
+            </span>
+            <span class="status-badge status-disputed">Disputed</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>DharoharGrid — Smart India Hackathon 2026 · Team VikalpVriksh</footer>
+
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------- cursor particle mandala ---------------- */
+
+  const canvas = document.getElementById("particle-canvas");
+  const ctx = canvas.getContext("2d");
+  let W, H, cx, cy;
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cx = W / 2;
+    cy = H / 2;
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  const SYMMETRY = 10;
+  const MAX_PARTICLES = 260;
+  let particles = [];
+  let lastSpawn = 0;
+
+  function spawn(x, y){
+    const angle = Math.atan2(y - cy, x - cx);
+    const speed = 0.25 + Math.random() * 0.5;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed + (Math.random() - 0.5) * 0.4,
+      vy: Math.sin(angle) * speed + (Math.random() - 0.5) * 0.4,
+      life: 1,
+      decay: 0.008 + Math.random() * 0.005,
+      size: 1 + Math.random() * 1.4
+    });
+    if (particles.length > MAX_PARTICLES) particles.shift();
+  }
+
+  function onPointerMove(e){
+    const now = performance.now();
+    if (now - lastSpawn < 16) return;
+    lastSpawn = now;
+    const x = e.clientX;
+    const y = e.clientY;
+    spawn(x, y);
+    if (Math.random() < 0.5){
+      spawn(x + (Math.random() - 0.5) * 10, y + (Math.random() - 0.5) * 10);
+    }
+  }
+
+  if (!reduceMotion){
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+  }
+
+  function colorForLife(life){
+    /* young particles: warm white -> aging: gold -> end: dim bronze */
+    if (life > 0.7){
+      return `rgba(245, 242, 234, ${life})`;
+    } else if (life > 0.35){
+      return `rgba(240, 207, 131, ${life})`;
+    }
+    return `rgba(107, 83, 37, ${life})`;
+  }
+
+  function tick(){
+    ctx.fillStyle = "rgba(5, 4, 3, 0.14)";
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.globalCompositeOperation = "lighter";
+
+    for (let i = particles.length - 1; i >= 0; i--){
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+
+      if (p.life <= 0){
+        particles.splice(i, 1);
+        continue;
+      }
+
+      const relX = p.x - cx;
+      const relY = p.y - cy;
+      const dist = Math.hypot(relX, relY);
+      const baseAngle = Math.atan2(relY, relX);
+      const color = colorForLife(p.life);
+
+      for (let s = 0; s < SYMMETRY; s++){
+        const a = baseAngle + (Math.PI * 2 * s) / SYMMETRY;
+        const px = cx + Math.cos(a) * dist;
+        const py = cy + Math.sin(a) * dist;
+
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 3;
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    ctx.globalCompositeOperation = "source-over";
+    ctx.shadowBlur = 0;
+
+    requestAnimationFrame(tick);
+  }
+
+  if (reduceMotion){
+    ctx.fillStyle = "rgba(5, 4, 3, 1)";
+    ctx.fillRect(0, 0, W, H);
+  } else {
+    requestAnimationFrame(tick);
+  }
+
+  /* ---------------- hero glow tracking ---------------- */
+
+  const heroTitle = document.getElementById("heroTitle");
+  heroTitle.addEventListener("pointermove", (e) => {
+    const rect = heroTitle.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+    const my = ((e.clientY - rect.top) / rect.height) * 100;
+    heroTitle.style.setProperty("--mx", mx + "%");
+    heroTitle.style.setProperty("--my", my + "%");
+    heroTitle.classList.add("touched");
+  });
+  heroTitle.addEventListener("pointerleave", () => heroTitle.classList.remove("touched"));
+
+  /* ---------------- shifting-font wordmark ---------------- */
+
+  const shiftWord = document.getElementById("shiftWord");
+  const fontCycle = ["font-cinzel", "font-yatra", "font-cormorant", "font-philosopher"];
+  let fontIndex = 0;
+
+  if (!reduceMotion){
+    setInterval(() => {
+      shiftWord.classList.add("fading");
+      setTimeout(() => {
+        shiftWord.classList.remove(fontCycle[fontIndex]);
+        fontIndex = (fontIndex + 1) % fontCycle.length;
+        shiftWord.classList.add(fontCycle[fontIndex]);
+        shiftWord.classList.remove("fading");
+      }, 350);
+    }, 3200);
+  }
+
+  /* ---------------- ask akashvani demo ---------------- */
+
+  const askForm = document.getElementById("askForm");
+  const askInput = document.getElementById("askInput");
+  const askFeed = document.getElementById("askFeed");
+
+  const demoReplies = [
+    "The Sheesh Mahal's mirror work traces back to Mughal glass artisans brought to Agra in the 17th century — I can walk you through that lineage on the Synapses tab.",
+    "That's a documented craft node, not yet narrated in full. I only speak from what's been verified or community-submitted — this one's still in the queue.",
+    "Amber Fort's four courtyards were built across three rulers' reigns. Ask me about a specific one — the Diwan-i-Aam, the Sheesh Mahal, or the zenana — and I'll go deeper."
+  ];
+  let replyIndex = 0;
+
+  askForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const value = askInput.value.trim();
+    if (!value) return;
+
+    const userMsg = document.createElement("div");
+    userMsg.className = "ask-msg user";
+    userMsg.textContent = value;
+    askFeed.appendChild(userMsg);
+    askInput.value = "";
+    askFeed.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    setTimeout(() => {
+      const aiMsg = document.createElement("div");
+      aiMsg.className = "ask-msg ai";
+      const label = document.createElement("span");
+      label.className = "ai-label";
+      label.textContent = "Akashvani";
+      const body = document.createElement("span");
+      body.textContent = demoReplies[replyIndex % demoReplies.length];
+      replyIndex++;
+      const tag = document.createElement("span");
+      tag.className = "demo-tag";
+      tag.textContent = "Preview response — live docent runs on the deployed RAG engine.";
+      aiMsg.appendChild(label);
+      aiMsg.appendChild(body);
+      aiMsg.appendChild(tag);
+      askFeed.appendChild(aiMsg);
+    }, 650);
+  });
+
+  /* ---------------- node tabs ---------------- */
+
+  const tabs = document.querySelectorAll(".node-tab");
+  const bodies = document.querySelectorAll(".node-body");
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.setAttribute("aria-selected", "false"));
+      tab.setAttribute("aria-selected", "true");
+      const key = tab.dataset.tab;
+      bodies.forEach((b) => b.classList.toggle("active", b.dataset.body === key));
+    });
+  });
+
+  /* ---------------- language pills ---------------- */
+
+  const langButtons = document.querySelectorAll(".lang-pill");
+  const trackTitle = document.getElementById("trackTitle");
+
+  langButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      langButtons.forEach((b) => b.setAttribute("aria-pressed", "false"));
+      btn.setAttribute("aria-pressed", "true");
+      trackTitle.textContent = `Amber Fort — micro-story, ${btn.dataset.lang}`;
+    });
+  });
+
+  /* ---------------- narration player (demo) ---------------- */
+
+  const playBtn = document.getElementById("playBtn");
+  const playIcon = document.getElementById("playIcon");
+  const trackFill = document.getElementById("trackFill");
+  const trackTime = document.getElementById("trackTime");
+
+  const DURATION = 42;
+  let playing = false;
+  let elapsed = 0;
+  let playTimer = null;
+
+  function formatTime(s){
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, "0");
+    return `${m}:${sec}`;
+  }
+
+  function setPlaying(state){
+    playing = state;
+    playBtn.setAttribute("aria-pressed", String(state));
+    playIcon.innerHTML = state
+      ? '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>'
+      : '<path d="M8 5v14l11-7z"/>';
+
+    if (state){
+      playTimer = setInterval(() => {
+        elapsed += 0.2;
+        if (elapsed >= DURATION){
+          elapsed = 0;
+          setPlaying(false);
+        }
+        trackFill.style.width = (elapsed / DURATION) * 100 + "%";
+        trackTime.textContent = `${formatTime(elapsed)} / ${formatTime(DURATION)}`;
+      }, 200);
+    } else {
+      clearInterval(playTimer);
+    }
+  }
+
+  playBtn.addEventListener("click", () => setPlaying(!playing));
+
+})();
+</script>
+
+</body>
+</html>

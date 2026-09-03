@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DharoharGrid</title>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          background-color: #050507;
+          color: #ffffff;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          overflow-x: hidden;
+          min-height: 100vh;
+        }
+
+        #matrix-canvas {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        .hero-container {
+      position: relative;
+      z-index: 2;
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 2rem 3rem 2rem; /* Increased top padding to clear the fixed header */
+      text-align: center;
+      user-select: none;
+      }
+        .hero-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.35rem 0.9rem;
+          border-radius: 9999px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.03);
+          backdrop-filter: blur(12px);
+          font-size: 0.75rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #a1a1aa;
+          margin-bottom: 2rem;
+        }
+
+        .hero-badge-indicator {
+          width: 6px;
+          height: 6px;
+          background: #e2b357;
+          border-radius: 50%;
+          box-shadow: 0 0 8px #e2b357;
+        }
+
+        #text-canvas {
+      width: 100%;
+      max-width: 1100px;
+      height: 140px; /* Reduced from 280px to stop vertical overflow */
+      display: block;
+      cursor: crosshair;
+        }
+
+        .hero-subtext {
+          margin-top: 1.5rem;
+          font-size: 1.15rem;
+          color: #8f9099;
+          max-width: 680px;
+          line-height: 1.6;
+          font-weight: 300;
+        }
+
+        .hero-subtext span {
+          color: #ffffff;
+          font-weight: 400;
+        }
+        /* Header & Glassmorphic Login Button */
+/* Header & Glassmorphic Login Button */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      z-index: 999; /* Ensures it stays above all canvases and containers */
+      pointer-events: auto;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #e2b357;
+    }
+
+    .glass-login-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      padding: 0.65rem 1.6rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border-radius: 9999px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
+    }
+
+    .glass-login-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.12),
+                  inset 0 0 10px rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .glass-login-btn:active {
+      transform: translateY(0);
+      background: rgba(255, 255, 255, 0.08);
+    }
+        /* Showcase Layout & Glassmorphism */
+    .showcase-section {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column; /* Stacks the cards vertically */
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7rem; /* Creates clean spacing between the two title cards */
+      padding: 6rem 2rem 10rem 2rem;
+    }
+
+    .glass-title-card {
+      width: 100%;
+      max-width: 1080px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      padding: 3rem;
+      background: rgba(18, 18, 22, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Scroll Fade-in Controller */
+    .fade-target {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-target.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Interactive Picture Stack */
+    .card-media-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .photo-stack {
+      position: relative;
+      width: 330px;
+      height: 420px;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .stack-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.55);
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  opacity 0.5s ease,
+                  z-index 0.5s ease;
+      background: #111;
+      user-select: none;
+    }
+
+    .stack-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.9) contrast(1.05);
+      transition: transform 0.4s ease;
+    }
+
+    .stack-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .stack-tag {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.3rem 0.75rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      color: #eaeaea;
+    }
+
+    .stack-hint {
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      color: #6d6e75;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Content Styling */
+    .card-content-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .card-category-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #e2b357;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .card-headline {
+      font-size: 2.15rem;
+      line-height: 1.25;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-description {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #9ca3af;
+      margin-bottom: 2rem;
+    }
+
+    /* Dynamic Explore Button */
+    .dynamic-explore-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 2.4rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #0f1013;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      overflow: hidden;
+      outline: none;
+      transition: border-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s ease;
+    }
+
+    .btn-glow-layer {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1;
+    }
+
+    .dynamic-explore-btn:hover {
+      border-color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.35);
+    }
+
+    .dynamic-explore-btn:hover .btn-glow-layer {
+      transform: scaleX(1);
+    }
+
+    .dynamic-explore-btn:hover .btn-text {
+      color: #050507;
+    }
+
+    .dynamic-explore-btn:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .glass-title-card {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+      }
+    }
+
+        /* Slide-in Animation Setup */
+    .slide-target {
+      opacity: 0;
+      transform: translateX(-48px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide-target.in-view {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Target inner content to cascade slide-in */
+    .slide-target .card-content-col {
+      opacity: 0;
+      transform: translateX(-24px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+    }
+
+    .slide-target .card-media-col {
+      opacity: 0;
+      transform: translateX(24px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.25s,
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+    }
+
+    .slide-target.in-view .card-content-col,
+    .slide-target.in-view .card-media-col {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Gold accent variant for Discover button */
+    .dynamic-discover-btn:hover {
+      box-shadow: 0 0 35px rgba(226, 179, 87, 0.35);
+      border-color: #e2b357;
+    }
+
+    .dynamic-discover-btn .btn-glow-layer {
+      background: #e2b357;
+    }
+
+    .dynamic-discover-btn:hover .btn-text {
+      color: #050507;
+    }
+
+        /* Empty Stack Placeholders */
+    .empty-card {
+      background: #0d0e12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-placeholder {
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.5) 100%);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      border-radius: inherit;
+    }
+
+    /* Akashvani Button Variant */
+    .dynamic-akashvani-btn:hover {
+      box-shadow: 0 0 35px rgba(120, 160, 255, 0.35);
+      border-color: #8bb2ff;
+    }
+
+    .dynamic-akashvani-btn .btn-glow-layer {
+      background: #8bb2ff;
+    }
+
+    .dynamic-akashvani-btn:hover .btn-text {
+      color: #050507;
+    }
+
+    </style>
+</head>
+<body>
+
+<canvas id="matrix-canvas"></canvas>
+<header class="header">
+    <div class="logo">Dharohar<span>Grid</span></div>
+    <button class="glass-login-btn">Login</button>
+</header>
+
+<main class="hero-container">
+    <div class="hero-badge">
+        <span class="hero-badge-indicator"></span>
+        Spatial Cultural Knowledge Graph
+    </div>
+
+    <canvas id="text-canvas"></canvas>
+
+    <p class="hero-subtext">
+        Geofenced, AI-narrated exploration of India's living cultural heritage.
+        Engineered for <span>deep-lineage research</span> and <span>spatial discovery</span>.
+    </p>
+</main>
+
+    <section class="showcase-section">
+        <div class="glass-title-card fade-target">
+            <div class="card-media-col">
+                <div class="photo-stack" id="photo-stack">
+                    <!-- Stack of curated Indian cultural aspect photos -->
+                    <div class="stack-card active" data-index="0">
+                        <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80" alt="Hawa Mahal, Jaipur - Architectural Tangible Heritage" />
+                        <span class="stack-tag">Tangible Architecture</span>
+                    </div>
+                    <div class="stack-card" data-index="1">
+                        <img src="https://images.unsplash.com/photo-1609743522653-52354461eb27?auto=format&fit=crop&w=900&q=80" alt="Classical Folk & Kathakali - Intangible Heritage" />
+                        <span class="stack-tag">Intangible Folk Arts</span>
+                    </div>
+                    <div class="stack-card" data-index="2">
+                        <img src="https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=900&q=80" alt="Hand Block Printing Craft Traditions" />
+                        <span class="stack-tag">Living Craft & GI Lineage</span>
+                    </div>
+                </div>
+                <span class="stack-hint">Click photo stack to rotate layer</span>
+            </div>
+
+            <div class="card-content-col">
+                <span class="card-category-label">Spatial Cultural Knowledge</span>
+                <h2 class="card-headline">India's Living Heritage, Mapped to Physical Coordinates.</h2>
+                <p class="card-description">
+                    Traverse national monument archives, craft traditions, and epigraphy through a multi-layered knowledge graph engine.
+                </p>
+
+                <button class="dynamic-explore-btn">
+                    <span class="btn-text">Explore</span>
+                    <span class="btn-glow-layer"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Second Title Card: Discovery Graph -->
+        <div class="glass-title-card slide-target" style="margin-top: 5rem;">
+            <div class="card-content-col">
+                <span class="card-category-label">Discovery Graph Engine</span>
+                <h2 class="card-headline">Semantic Synapse & Vector Cross-Linkage.</h2>
+                <p class="card-description">
+                    Uncovering hidden lineage lines and research-grade connections across tangible monuments, craft ecosystems, and oral histories.
+                </p>
+
+                <button class="dynamic-explore-btn dynamic-discover-btn">
+                    <span class="btn-text">Discover</span>
+                    <span class="btn-glow-layer"></span>
+                </button>
+            </div>
+
+            <div class="card-media-col">
+                <div class="photo-stack" id="photo-stack-2">
+                    <!-- Stack of Obsidian software linked node views -->
+                    <div class="stack-card active" data-index="0">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=80" alt="Obsidian Network Graph View" />
+                        <span class="stack-tag">Synapse Graph View</span>
+                    </div>
+                    <div class="stack-card" data-index="1">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=900&q=80" alt="Digital Matrix Node Connections" />
+                        <span class="stack-tag">Vector Cosine Links</span>
+                    </div>
+                    <div class="stack-card" data-index="2">
+                        <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=900&q=80" alt="Multi-dimensional Node Clusters" />
+                        <span class="stack-tag">Semantic Clusters</span>
+                    </div>
+                </div>
+                <span class="stack-hint">Click stack to inspect graph layer</span>
+            </div>
+        </div>
+
+        <!-- Third Title Card: Akashvani Audio Layer -->
+        <div class="glass-title-card slide-target">
+            <div class="card-media-col">
+                <div class="photo-stack" id="photo-stack-3">
+                    <!-- Empty photo stack layers ready for dynamic audio/image assets -->
+                    <div class="stack-card empty-card active" data-index="0">
+                        <div class="empty-placeholder"></div>
+                        <span class="stack-tag">Acoustic Layer 01</span>
+                    </div>
+                    <div class="stack-card empty-card" data-index="1">
+                        <div class="empty-placeholder"></div>
+                        <span class="stack-tag">Acoustic Layer 02</span>
+                    </div>
+                    <div class="stack-card empty-card" data-index="2">
+                        <div class="empty-placeholder"></div>
+                        <span class="stack-tag">Acoustic Layer 03</span>
+                    </div>
+                </div>
+                <span class="stack-hint">Click stack to cycle track view</span>
+            </div>
+
+            <div class="card-content-col">
+                <span class="card-category-label">Acoustic & Voice Pipeline</span>
+                <h2 class="card-headline">Akashvani: Grounded Multilingual Narration.</h2>
+                <p class="card-description">
+                    Contextual story synthesis with ambient soundscapes and regional voice delivery across India's cultural nodes.
+                </p>
+
+                <button class="dynamic-explore-btn dynamic-akashvani-btn">
+                    <span class="btn-text">Akashvani</span>
+                    <span class="btn-glow-layer"></span>
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+<script>
+    const mouse = {
+      x: -9999,
+      y: -9999,
+      worldX: -9999,
+      worldY: -9999
+    };
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.worldX = e.clientX;
+      mouse.worldY = e.clientY;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      mouse.worldX = -9999;
+      mouse.worldY = -9999;
+      mouse.x = -9999;
+      mouse.y = -9999;
+    });
+
+    // --- 1. Dotted Matrix Canvas with 7% Soft Glow & Distortion ---
+    const matrixCanvas = document.getElementById('matrix-canvas');
+    const mCtx = matrixCanvas.getContext('2d');
+    const SPACING = 28;
+    const INFLUENCE_RADIUS = 150;
+    const MAX_DISTORTION = 14;
+
+    function resizeMatrix() {
+      matrixCanvas.width = window.innerWidth;
+      matrixCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeMatrix);
+    resizeMatrix();
+
+    function renderMatrix() {
+      mCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+      const cols = Math.ceil(matrixCanvas.width / SPACING);
+      const rows = Math.ceil(matrixCanvas.height / SPACING);
+
+      for (let r = 0; r <= rows; r++) {
+        for (let c = 0; c <= cols; c++) {
+          const originX = c * SPACING;
+          const originY = r * SPACING;
+
+          const dx = mouse.worldX - originX;
+          const dy = mouse.worldY - originY;
+          const dist = Math.hypot(dx, dy);
+
+          let drawX = originX;
+          let drawY = originY;
+          let alpha = 0.12;
+          let size = 1;
+
+          if (dist < INFLUENCE_RADIUS && dist > 0) {
+            const factor = 1 - dist / INFLUENCE_RADIUS;
+            const displacement = factor * factor * MAX_DISTORTION;
+
+            drawX -= (dx / dist) * displacement;
+            drawY -= (dy / dist) * displacement;
+            alpha = 0.12 + 0.07 * factor; // Base alpha + exactly 7% soft glow boost
+            size = 1 + factor * 1.5;
+          }
+
+          mCtx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+          mCtx.beginPath();
+          mCtx.arc(drawX, drawY, size, 0, Math.PI * 2);
+          mCtx.fill();
+        }
+      }
+      requestAnimationFrame(renderMatrix);
+    }
+    requestAnimationFrame(renderMatrix);
+
+    // --- 2. Hero Text Canvas Particle Engine ---
+    const textCanvas = document.getElementById('text-canvas');
+    const tCtx = textCanvas.getContext('2d');
+    let textParticles = [];
+
+    function initTextParticles() {
+      const rect = textCanvas.getBoundingClientRect();
+      textCanvas.width = rect.width;
+      textCanvas.height = rect.height;
+
+      tCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+      tCtx.fillStyle = '#ffffff';
+      tCtx.textAlign = 'center';
+      tCtx.textBaseline = 'middle';
+
+      // Clamp font size tighter to prevent vertical and horizontal clipping
+      const fontSize = Math.min(rect.width / 11, 78);
+      tCtx.font = `800 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+      tCtx.fillText('DHAROHARGRID', textCanvas.width / 2, textCanvas.height / 2);
+
+      const imgData = tCtx.getImageData(0, 0, textCanvas.width, textCanvas.height).data;
+      textParticles = [];
+
+      const step = 4;
+      for (let y = 0; y < textCanvas.height; y += step) {
+        for (let x = 0; x < textCanvas.width; x += step) {
+          const index = (y * textCanvas.width + x) * 4;
+          if (imgData[index + 3] > 128) {
+            textParticles.push({
+              originX: x,
+              originY: y,
+              x: x,
+              y: y,
+              vx: 0,
+              vy: 0,
+              baseColor: '#ffffff'
+            });
+          }
+        }
+      }
+    }
+
+    textCanvas.addEventListener('mousemove', (e) => {
+      const rect = textCanvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+
+    window.addEventListener('resize', initTextParticles);
+    initTextParticles();
+
+    function renderTextParticles() {
+      tCtx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+
+      const REPEL_RADIUS = 75;
+      const REPEL_FORCE = 7;
+      const FRICTION = 0.88;
+      const RETURN_SPEED = 0.07;
+
+      for (let i = 0; i < textParticles.length; i++) {
+        const p = textParticles[i];
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < REPEL_RADIUS && dist > 0) {
+          const force = (1 - dist / REPEL_RADIUS) * REPEL_FORCE;
+          p.vx -= (dx / dist) * force;
+          p.vy -= (dy / dist) * force;
+        }
+
+        p.vx += (p.originX - p.x) * RETURN_SPEED;
+        p.vy += (p.originY - p.y) * RETURN_SPEED;
+
+        p.vx *= FRICTION;
+        p.vy *= FRICTION;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        tCtx.fillStyle = '#ffffff';
+        tCtx.fillRect(p.x, p.y, 1.8, 1.8);
+      }
+      requestAnimationFrame(renderTextParticles);
+    }
+    requestAnimationFrame(renderTextParticles);
+
+    // --- 3. Scroll Intersection Observer for Fade-in ---
+    const fadeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    document.querySelectorAll('.fade-target').forEach((el) => {
+      fadeObserver.observe(el);
+    });
+
+    // --- 4. Interactive Photo Stack Shuffler ---
+    const stackContainer = document.getElementById('photo-stack');
+    const cards = Array.from(stackContainer.querySelectorAll('.stack-card'));
+
+    const transforms = [
+      { transform: 'translate(0px, 0px) rotate(0deg) scale(1)', zIndex: 3, opacity: 1 },
+      { transform: 'translate(14px, 12px) rotate(4deg) scale(0.95)', zIndex: 2, opacity: 0.75 },
+      { transform: 'translate(28px, 24px) rotate(8deg) scale(0.9)', zIndex: 1, opacity: 0.5 }
+    ];
+
+    function arrangeStack() {
+      cards.forEach((card, idx) => {
+        const style = transforms[idx];
+        card.style.transform = style.transform;
+        card.style.zIndex = style.zIndex;
+        card.style.opacity = style.opacity;
+      });
+    }
+    arrangeStack();
+
+    stackContainer.addEventListener('click', () => {
+      const topCard = cards.shift();
+      topCard.style.transform = 'translate(-80px, -20px) rotate(-12deg) scale(0.85)';
+      topCard.style.opacity = '0';
+
+      setTimeout(() => {
+        cards.push(topCard);
+        arrangeStack();
+      }, 200);
+    });
+
+    // Register slide targets with the observer
+    document.querySelectorAll('.slide-target').forEach((el) => {
+      fadeObserver.observe(el);
+    });
+
+    // --- Interactive Photo Stack Shuffler (Graph Stack) ---
+    const stackContainer2 = document.getElementById('photo-stack-2');
+    const cards2 = Array.from(stackContainer2.querySelectorAll('.stack-card'));
+
+    function arrangeStack2() {
+      cards2.forEach((card, idx) => {
+        const style = transforms[idx];
+        card.style.transform = style.transform;
+        card.style.zIndex = style.zIndex;
+        card.style.opacity = style.opacity;
+      });
+    }
+    arrangeStack2();
+
+    stackContainer2.addEventListener('click', () => {
+      const topCard = cards2.shift();
+      topCard.style.transform = 'translate(-80px, -20px) rotate(-12deg) scale(0.85)';
+      topCard.style.opacity = '0';
+
+      setTimeout(() => {
+        cards2.push(topCard);
+        arrangeStack2();
+      }, 200);
+    });
+
+    // --- Interactive Photo Stack Shuffler (Stack 3 - Akashvani) ---
+    const stackContainer3 = document.getElementById('photo-stack-3');
+    const cards3 = Array.from(stackContainer3.querySelectorAll('.stack-card'));
+
+    function arrangeStack3() {
+      cards3.forEach((card, idx) => {
+        const style = transforms[idx];
+        card.style.transform = style.transform;
+        card.style.zIndex = style.zIndex;
+        card.style.opacity = style.opacity;
+      });
+    }
+    arrangeStack3();
+
+    stackContainer3.addEventListener('click', () => {
+      const topCard = cards3.shift();
+      topCard.style.transform = 'translate(-80px, -20px) rotate(-12deg) scale(0.85)';
+      topCard.style.opacity = '0';
+
+      setTimeout(() => {
+        cards3.push(topCard);
+        arrangeStack3();
+      }, 200);
+    });
+</script>
+</body>
+</html>
