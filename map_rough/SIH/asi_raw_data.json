@@ -1,0 +1,1762 @@
+[
+  {
+    "node_id": "IN-RJ-ASI-000",
+    "title": "Ancient Site",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bhangadh, Alwar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Alwar district.",
+    "nearby_culture": "Regional heritage of Alwar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bhangadh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-001",
+    "title": "Siva Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Neelkanth, Alwar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Alwar district.",
+    "nearby_culture": "Regional heritage of Alwar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Neelkanth.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-002",
+    "title": "Baori and Adjacent Archaeological Remains",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Neemrana, Alwar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Alwar district.",
+    "nearby_culture": "Regional heritage of Alwar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Neemrana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-003",
+    "title": "Ancient Remains",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Pandrupol, Alwar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Alwar district.",
+    "nearby_culture": "Regional heritage of Alwar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Pandrupol.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-004",
+    "title": "Lal Masjid",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Tijara, Alwar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Alwar district.",
+    "nearby_culture": "Regional heritage of Alwar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Tijara.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-005",
+    "title": "Ruins of Temples",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Atru or Ganeshganj, Baran",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Baran district.",
+    "nearby_culture": "Regional heritage of Baran.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Atru or Ganeshganj.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-006",
+    "title": "Yupa Pillars",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Badva, Baran",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Baran district.",
+    "nearby_culture": "Regional heritage of Baran.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Badva.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-007",
+    "title": "Ancient Ruins and Structural Remains",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Krishnavilas, Baran",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Baran district.",
+    "nearby_culture": "Regional heritage of Baran.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Krishnavilas.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-008",
+    "title": "Old Temple,Statues and Inscriptions",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Shergarh, Baran",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Baran district.",
+    "nearby_culture": "Regional heritage of Baran.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Shergarh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-009",
+    "title": "Akbar's Chhatri",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-010",
+    "title": "Ancient Fort with its Monuments",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-011",
+    "title": "Brahmabad Idgah",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-012",
+    "title": "Islam Shah's Gate",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-013",
+    "title": "Jahangir's Gateway",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-014",
+    "title": "Jhajri",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-015",
+    "title": "Saraj Sad-Ul-Lah",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-016",
+    "title": "Usha Mandir",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-017",
+    "title": "Lodhi's Minar",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bayana, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bayana.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-018",
+    "title": "Fateh Burj Near Anah Gate",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bharatpur, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bharatpur.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-019",
+    "title": "Moat Surrounding the Fortwall comprising part of Khasra No.1881 as shown in the Site Plan reproduced",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bharatpur, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bharatpur.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-020",
+    "title": "Fortwalls including Chowburja Gate and Approach Bridges at Chowburja and Ashtadhatu Gate",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bharatpur, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bharatpur.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-021",
+    "title": "Jawahar Burj And Ashtadhatu Gateway",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bharatpur Fort (Inside), Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bharatpur Fort (Inside).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-022",
+    "title": "Delhi Gate",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bharatpur Fort (Outside), Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bharatpur Fort (Outside).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-023",
+    "title": "Deeg Bhawans (Palace)",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Deeg, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Deeg.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-024",
+    "title": "Looted Gun",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Deeg, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Deeg.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-025",
+    "title": "Marble Jhoola",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Deeg, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Deeg.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-026",
+    "title": "Chaurasi Khamba Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Kaman, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Kaman.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-027",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Malah, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Malah.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-028",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Noh, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Noh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-029",
+    "title": "Colossal image of Yaksha",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Noh, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Noh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-030",
+    "title": "Lal Mahal",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Rupvas, Bharatpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bharatpur district.",
+    "nearby_culture": "Regional heritage of Bharatpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Rupvas.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-031",
+    "title": "Mahakal And Two Other Temples",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bijolia, Bhilwara",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bhilwara district.",
+    "nearby_culture": "Regional heritage of Bhilwara.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bijolia.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-032",
+    "title": "Rock Inscription (12th Century)",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bijolia, Bhilwara",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bhilwara district.",
+    "nearby_culture": "Regional heritage of Bhilwara.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bijolia.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-033",
+    "title": "Rock Inscription within the Parasvanath Temple compound(12th Century)",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bijolia, Bhilwara",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bhilwara district.",
+    "nearby_culture": "Regional heritage of Bhilwara.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bijolia.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-034",
+    "title": "Ancient Temple known as Kaner-ki-Putli(together with Adjacent Land Comprised In Part of Survey Plot",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Khadipur Village, Bhilwara",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bhilwara district.",
+    "nearby_culture": "Regional heritage of Bhilwara.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Khadipur Village.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-035",
+    "title": "Wall Paintings of Hardoti School in the Palace",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bundi, Bundi",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bundi district.",
+    "nearby_culture": "Regional heritage of Bundi.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bundi.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-036",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Keshavraipatan, Bundi",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bundi district.",
+    "nearby_culture": "Regional heritage of Bundi.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Keshavraipatan.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-037",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Nainwa, Bundi",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Bundi district.",
+    "nearby_culture": "Regional heritage of Bundi.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Nainwa.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-038",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Abaneri, Dausa",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dausa district.",
+    "nearby_culture": "Regional heritage of Dausa.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Abaneri.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-039",
+    "title": "Baori",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Abaneri, Dausa",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dausa district.",
+    "nearby_culture": "Regional heritage of Dausa.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Abaneri.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-040",
+    "title": "Harsat Mata-Ka-Mandir",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Abaneri, Dausa",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dausa district.",
+    "nearby_culture": "Regional heritage of Dausa.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Abaneri.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-041",
+    "title": "Banjaron-Ki-Chhatri containing two Pillars similar to Railling Pillars of Bharhut Stupa",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Lalsote, Dausa",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dausa district.",
+    "nearby_culture": "Regional heritage of Dausa.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Lalsote.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-042",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Maheshra, Dausa",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dausa district.",
+    "nearby_culture": "Regional heritage of Dausa.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Maheshra.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-043",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Raniwas, Dausa",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dausa district.",
+    "nearby_culture": "Regional heritage of Dausa.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Raniwas.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-044",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Sikrai, Dausa",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dausa district.",
+    "nearby_culture": "Regional heritage of Dausa.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Sikrai.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-045",
+    "title": "Jogni-Jogna Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Dholpur, Dholpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dholpur district.",
+    "nearby_culture": "Regional heritage of Dholpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Dholpur.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-046",
+    "title": "Shergarh Fort",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Dholpur, Dholpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dholpur district.",
+    "nearby_culture": "Regional heritage of Dholpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Dholpur.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-047",
+    "title": "Site of Babur's Garden alongwith Ancient Structures",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Jhor, Dholpur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Dholpur district.",
+    "nearby_culture": "Regional heritage of Dholpur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Jhor.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-048",
+    "title": "Sun Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Amber, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Amber.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-049",
+    "title": "Jama Masjid",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Amber, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Amber.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-050",
+    "title": "Laxmi Narainji's Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Amber, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Amber.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-051",
+    "title": "Sri Jagat Siromaniji's Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Amber, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Amber.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-052",
+    "title": "Excavated Site",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bairat, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bairat.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-053",
+    "title": "Pundrik-Ji-Ki-Haveli - Paintings in a Room",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Brahmpuri, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Brahmpuri.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-054",
+    "title": "Temple Containing Fresco Paintings",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Gultaji, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Gultaji.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-055",
+    "title": "Fortress known as Medhaji-ka-Mahal",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Jamwaramgarh, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Jamwaramgarh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-056",
+    "title": "Excavated Site",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Sambhar, Jaipur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jaipur district.",
+    "nearby_culture": "Regional heritage of Jaipur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Sambhar.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-057",
+    "title": "Buddhist Caves and Pillar",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Binnayaga(Dag), Jhalawar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jhalawar district.",
+    "nearby_culture": "Regional heritage of Jhalawar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Binnayaga(Dag).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-058",
+    "title": "Caves of Niranjani etc.",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Binnayaga(Dag), Jhalawar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jhalawar district.",
+    "nearby_culture": "Regional heritage of Jhalawar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Binnayaga(Dag).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-059",
+    "title": "Ancient Ruins",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Dalsagar(Gangadhar), Jhalawar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jhalawar district.",
+    "nearby_culture": "Regional heritage of Jhalawar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Dalsagar(Gangadhar).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-060",
+    "title": "Ancient Ruins",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Dudhaliya(Dag), Jhalawar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jhalawar district.",
+    "nearby_culture": "Regional heritage of Jhalawar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Dudhaliya(Dag).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-061",
+    "title": "Buddhist Caves",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Hathiagor, Jhalawar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jhalawar district.",
+    "nearby_culture": "Regional heritage of Jhalawar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Hathiagor.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-062",
+    "title": "Old Temples Near the Chandrabhaga",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Jhalrapatan, Jhalawar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jhalawar district.",
+    "nearby_culture": "Regional heritage of Jhalawar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Jhalrapatan.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-063",
+    "title": "Buddist Caves , Pillars,Idols",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Kolvi(Dag), Jhalawar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Jhalawar district.",
+    "nearby_culture": "Regional heritage of Jhalawar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Kolvi(Dag).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-064",
+    "title": "Wall Paintings in the Palaces of Maharaja Gopal Lal",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Karauli, Karauli",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Karauli district.",
+    "nearby_culture": "Regional heritage of Karauli.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Karauli.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-065",
+    "title": "Siva Temple & 2 Unpublished Gupta InscriptionÂ·",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Charchoma, Kota",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Kota district.",
+    "nearby_culture": "Regional heritage of Kota.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Charchoma.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-066",
+    "title": "Fortwall And Statues",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Dara Or Mukandara Temple, Kota",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Kota district.",
+    "nearby_culture": "Regional heritage of Kota.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Dara Or Mukandara Temple.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-067",
+    "title": "Temple Â With Inscriptions",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Kanswa, Kota",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Kota district.",
+    "nearby_culture": "Regional heritage of Kota.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Kanswa.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-068",
+    "title": "Ranthambhore Fort",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Ranthambhore, Sawai Madhopur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Sawai Madhopur district.",
+    "nearby_culture": "Regional heritage of Sawai Madhopur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Ranthambhore.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-069",
+    "title": "Persian Inscription In A Baori",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Sawai Madhopur Alanpur, Sawai Madhopur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Sawai Madhopur district.",
+    "nearby_culture": "Regional heritage of Sawai Madhopur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Sawai Madhopur Alanpur.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-070",
+    "title": "Jain Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Sawai Madhopur Alanpur, Sawai Madhopur",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Sawai Madhopur district.",
+    "nearby_culture": "Regional heritage of Sawai Madhopur.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Sawai Madhopur Alanpur.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-071",
+    "title": "Harshnath Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Harshnath Sikar, Sikar",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Sikar district.",
+    "nearby_culture": "Regional heritage of Sikar.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Harshnath Sikar.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-072",
+    "title": "Bisal Deoji's Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bisalpur, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bisalpur.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-073",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Bundwali Doongri, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Bundwali Doongri.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-074",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Gariagarh(Newai), Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Gariagarh(Newai).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-075",
+    "title": "Devapura Barodia Mounds",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Jhalai, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Jhalai.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-076",
+    "title": "Hathi Bhata",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Kakor, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Kakor.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-077",
+    "title": "Ancient Mound",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Nagar, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Nagar.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-078",
+    "title": "Excavated Site",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Nagar, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Nagar.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-079",
+    "title": "Mand Kila Tal Inscription",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Nagar, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Nagar.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-080",
+    "title": "Yupa Pillars In Bichpuria Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Nagar, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Nagar.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-081",
+    "title": "Inscription",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Panwar, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Panwar.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-082",
+    "title": "Excavated Site",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Rairh(Newai), Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Rairh(Newai).",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-083",
+    "title": "Kala Pahar Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Todaraisingh, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Todaraisingh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-084",
+    "title": "Kalyanraiji's Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Todaraisingh, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Todaraisingh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-085",
+    "title": "Laxmi Narainji's Temple",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Todaraisingh, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Todaraisingh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-086",
+    "title": "Baories Old locally known as Hadi-Rani-ka-Kund",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Todaraisingh, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Todaraisingh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  },
+  {
+    "node_id": "IN-RJ-ASI-087",
+    "title": "Pipaji's Temple (Near Dispensary)",
+    "category": "TANGIBLE_ASI_PROTECTED",
+    "location_text": "Todaraisingh, Tonk",
+    "era": "Government Protected Antiquity",
+    "famous_for": "A centrally protected monument located in the Tonk district.",
+    "nearby_culture": "Regional heritage of Tonk.",
+    "docent_details": "Officially gazetted by the Archaeological Survey of India (ASI) Jaipur Circle. Locality: Todaraisingh.",
+    "media": {
+      "photo_url": "",
+      "attribution": "ASI Jaipur Circle"
+    },
+    "trust_status": "government_verified",
+    "synapses": [
+      {
+        "connection": "Included in the Central Protected Monuments national registry."
+      }
+    ]
+  }
+]

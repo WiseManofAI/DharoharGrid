@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DharoharGrid - Spatial Cultural Knowledge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    /* Global & Vibe Matching */
+    /* Magic CSS to turn standard maps into Dark Mode */
+   .dark-matter-tiles {
+      filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(100%);
+    }
+    body { 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background-color: #050505; /* Dark background to match screenshot */
+      color: #ffffff;
+    }
+    
+    #map { 
+      height: 100vh; 
+      width: 100vw; 
+      background-color: #050505;
+    }
+
+    /* Glassmorphic Header */
+    .header-bar {
+      position: absolute;
+      top: 20px;
+      left: 60px;
+      z-index: 1000;
+      background: rgba(15, 15, 15, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-bar h2 { 
+      margin: 0; 
+      font-size: 1.2rem; 
+      color: #ffffff; 
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    .header-bar h2 span {
+      color: #e6b31e; /* Amber/Gold accent from your UI */
+    }
+
+    .header-bar p { 
+      margin: 6px 0 0; 
+      font-size: 0.75rem; 
+      color: #a0a0a0; 
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Unique Glassy Marker */
+    .glassy-marker {
+      background: rgba(230, 179, 30, 0.2); /* Tinted amber */
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1.5px solid rgba(230, 179, 30, 0.8);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(230, 179, 30, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    .glassy-marker:hover {
+      background: rgba(230, 179, 30, 0.5);
+      box-shadow: 0 0 20px rgba(230, 179, 30, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.5);
+      transform: scale(1.1);
+    }
+
+    /* Glassmorphic Leaflet Popup Overrides */
+    .leaflet-popup-content-wrapper {
+      background: rgba(20, 20, 22, 0.65) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px !important;
+      color: #fff !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+      padding: 4px !important;
+    }
+    
+    /* Hide the default popup triangle for a cleaner floating glass look */
+    .leaflet-popup-tip-container {
+      display: none !important; 
+    }
+    
+    /* Adjust popup position since tip is hidden */
+    .leaflet-popup {
+      margin-bottom: 20px !important;
+    }
+
+    /* Popup Internal Content */
+    .custom-popup {
+      padding: 8px;
+    }
+    .custom-popup img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-top: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 0.65rem;
+      border-radius: 20px;
+      background-color: rgba(230, 179, 30, 0.15);
+      color: #e6b31e;
+      border: 1px solid rgba(230, 179, 30, 0.3);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .custom-popup h3 {
+      margin: 0 0 6px 0;
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .custom-popup p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #b0b0b0;
+      line-height: 1.4;
+    }
+    .synapse-box {
+      margin-top: 12px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-left: 2px solid #e6b31e;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.75rem;
+      color: #d0d0d0;
+      line-height: 1.5;
+    }
+    .synapse-box strong {
+      color: #e6b31e;
+      display: block;
+      margin-bottom: 3px;
+    }
+    
+    /* Close Button Override */
+    .leaflet-popup-close-button {
+      color: #fff !important;
+      text-shadow: none !important;
+      padding: 8px 8px 0 0 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <h2>DHAROHAR<span>GRID</span></h2>
+    <p id="site-count">Spatial Cultural Knowledge Graph</p>
+  </div>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Initialize map centered over Rajasthan
+    const map = L.map('map', {
+      zoomControl: false // Disable default zoom to keep it clean (you can re-add or reposition it)
+    }).setView([26.9, 74.5], 7);
+
+    // Reposition zoom control to bottom right
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    // Use a Dark Base Map (CartoDB Dark Matter) to match the dark UI
+    // Standard OpenStreetMap, transformed into Dark Mode via CSS
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap',
+      className: 'dark-matter-tiles' // This applies our dark mode CSS
+    }).addTo(map);
+
+    // Define the custom Glassy Marker
+    const glassyIcon = L.divIcon({
+      className: 'glassy-marker',
+      iconSize: [24, 24], // Size of the orb
+      iconAnchor: [12, 12], // Center it on the coordinates
+      popupAnchor: [0, -12] // Pop opens right above the orb
+    });
+
+    // Function to render markers
+    function renderMarkers(data) {
+      document.getElementById('site-count').innerText = `${data.length} Nodes Discovered`;
+
+      data.forEach(site => {
+        const lat = site.coordinates.lat;
+        const lng = site.coordinates.lng;
+        
+        // Safety check for optional data
+        const synapseText = site.synapses && site.synapses[0] ? site.synapses[0].connection : 'Tracing architectural lineages via regional archives.';
+        const photoUrl = site.media && site.media.photo_url ? site.media.photo_url.trim() : '';
+        const imgHtml = photoUrl 
+          ? `<img src="${photoUrl}" alt="${site.title}" onerror="this.style.display='none'">` 
+          : `<div style="width: 100%; height: 110px; background: rgba(0,0,0,0.6); border: 1px dashed #e6b31e; border-radius: 8px; margin-top: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 9px; color: #e6b31e; text-align: center; letter-spacing: 1px;">NO ARCHIVAL IMAGERY<br><span style="font-size: 8px; opacity: 0.6; margin-top: 4px;">AWAITING GROUND TRUTH DATA</span></div>`;
+
+        const popupContent = `
+          <div class="custom-popup">
+            <span class="badge">${site.category}</span>
+            <h3>${site.title}</h3>
+            <p>${site.famous_for}</p>
+            ${imgHtml}
+            <div class="synapse-box">
+              <strong>Researcher Synapse</strong>
+              ${synapseText}
+            </div>
+          </div>
+        `;
+
+        L.marker([lat, lng], { icon: glassyIcon })
+          .addTo(map)
+          .bindPopup(popupContent, { maxWidth: 300, minWidth: 260 });
+      });
+    }
+
+    // Fetch JSON data
+    fetch('rajasthan_master.json')
+      .then(response => response.json())
+      .then(data => renderMarkers(data))
+      .catch(err => {
+        console.warn("JSON not found, loading dummy spatial data for preview...");
+        // Dummy data so the map works visually even without the JSON file
+        const dummyData = [
+          {
+            title: "Amer Fort",
+            category: "Tangible Architecture",
+            famous_for: "Iconic hilltop fort with Hindu-Rajput architectural elements, featuring the Sheesh Mahal (Mirror Palace).",
+            coordinates: { lat: 26.9855, lng: 75.8513 },
+            media: { photo_url: "https://images.unsplash.com/photo-1599661559890-50d4eb0c1b48?auto=format&fit=crop&q=80&w=600" },
+            synapses: [{ connection: "Linked to Maota Lake hydrology systems and Kachwaha dynasty epigraphy." }]
+          },
+          {
+            title: "Kumbhalgarh Fort",
+            category: "Fortification",
+            famous_for: "Features the second longest continuous wall in the world and birthplace of Maharana Pratap.",
+            coordinates: { lat: 27.1424, lng: 73.5820 },
+            media: { photo_url: "" },
+            synapses: [{ connection: "Strategic elevation points align with Aravalli range geospatial defense grids." }]
+          }
+        ];
+        renderMarkers(dummyData);
+      });
+  </script>
+</body>
+</html>

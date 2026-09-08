@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DharoharGrid - Rajasthan Heritage Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0a0a0a; }
+    #map { height: 100vh; width: 100vw; background-color: #0a0a0a; }
+    
+    /* 1. MAGIC TRICK: Turn standard OpenStreetMap into Dark Mode without an API Key */
+    .leaflet-layer,
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out,
+    .leaflet-control-attribution {
+      filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+    }
+
+    /* 2. Glassmorphic Top Header */
+    .header-bar {
+      position: absolute;
+      top: 20px;
+      left: 60px;
+      z-index: 1000;
+      background: rgba(20, 20, 30, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      color: white;
+    }
+    .header-bar h2 { margin: 0; font-size: 1.3rem; color: #00ffff; letter-spacing: 1px; }
+    .header-bar p { margin: 4px 0 0; font-size: 0.85rem; color: #b0b0b0; }
+
+    /* 3. Glowing Glass Node (Replaces Default Pin) */
+    .glass-marker {
+      background: rgba(0, 255, 255, 0.2);
+      border: 2px solid rgba(0, 255, 255, 0.8);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); }
+      100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
+    }
+
+    /* 4. Glassmorphic Popup Window */
+    .leaflet-popup-content-wrapper {
+      background: rgba(15, 15, 25, 0.65) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      border-radius: 16px !important;
+      color: #fff !important;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6) !important;
+    }
+    
+    /* 5. The Label Line pointing down to the node */
+    .leaflet-popup-tip-container {
+      height: 40px !important; 
+      margin-top: -1px !important;
+    }
+    .leaflet-popup-tip {
+      background: rgba(0, 255, 255, 0.8) !important;
+      width: 2px !important; 
+      height: 40px !important; 
+      margin: 0 auto !important;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.8) !important;
+      transform: none !important; 
+    }
+
+    /* Content Styling Inside Popup */
+    .custom-popup h3 { margin: 4px 0 8px 0; font-size: 1.1rem; color: #ffffff; }
+    .custom-popup p { margin: 0; font-size: 0.85rem; color: #dcdcdc; line-height: 1.4; }
+    .custom-popup img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      border-radius: 12px;
+      background-color: rgba(0, 255, 255, 0.15);
+      border: 1px solid rgba(0, 255, 255, 0.4);
+      color: #00ffff;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .synapse-box {
+      margin-top: 12px;
+      padding: 8px 10px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid #00ffff;
+      font-size: 0.75rem;
+      color: #a0c4ff;
+      border-radius: 0 6px 6px 0;
+    }
+    .leaflet-popup-close-button {
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <h2>DharoharGrid (Rajasthan MVP)</h2>
+    <p id="site-count">Loading heritage markers...</p>
+  </div>
+
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Initialize map zoomed specifically to Rajasthan
+    const map = L.map('map').setView([26.7, 73.5], 6);
+
+    // Standard OpenStreetMap tiles (Our CSS above makes them dark)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Define the custom pulsating glass node icon
+    const glassNodeIcon = L.divIcon({
+      className: 'glass-marker',
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
+      popupAnchor: [0, -20] // Shifts popup up so the label line connects perfectly
+    });
+
+    // Fetch and plot the JSON points
+    fetch('rajasthan_master.json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('site-count').innerText = `${data.length} heritage sites mapped across Rajasthan`;
+
+        data.forEach(site => {
+          const lat = site.coordinates.lat;
+          const lng = site.coordinates.lng;
+
+          const popupContent = `
+            <div class="custom-popup">
+              <span class="badge">${site.category}</span>
+              <h3 style="margin: 4px 0 6px 0; font-size: 1.05rem;">${site.title}</h3>
+              <p style="margin: 0; font-size: 0.85rem; color: #333;">${site.famous_for}</p>
+              ${site.media.photo_url ? `<img src="${site.media.photo_url}" alt="${site.title}" onerror="this.style.display='none'">` : ''}
+              <div class="synapse-box">
+                <strong>Researcher Synapse:</strong> ${site.synapses[0]?.connection || 'Regional heritage network'}
+              </div>
+            </div>
+          `;
+
+          // Assign the glassNodeIcon instead of the default pin
+          L.marker([lat, lng], { icon: glassNodeIcon })
+            .addTo(map)
+            .bindPopup(popupContent, { maxWidth: 300, minWidth: 250 });
+        });
+      })
+      .catch(err => {
+        console.error("Error loading JSON:", err);
+        document.getElementById('site-count').innerText = "Failed to load master JSON";
+      });
+  </script>
+</body>
+</html>
