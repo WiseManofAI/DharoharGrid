@@ -11,6 +11,60 @@
           padding: 0;
         }
 
+        /* ---------- Liquid glass (design system) ----------
+           Two treatments, matching the visual language of
+           github.com/dashersw/liquid-glass-js:
+           1. .lg-real  — layout-only shell for elements upgraded to the
+              actual WebGL refraction library at runtime (see the
+              upgradeToLiquidGlass() script near the end of <body>).
+              Always-visible panels only (hidden/toggled elements would
+              snapshot at 0×0) — the 3 showcase cards + hero badge here.
+           2. .liquid-glass-css — a CSS-only approximation (blur + layered
+              rim highlights + an animated specular sheen) for everything
+              interactive: buttons, the login card, toggles. Real WebGL
+              refraction can't cheaply track hover/press states or
+              re-snapshot every frame, so these keep this treatment
+              everywhere on the site, including map.html and Discover. */
+        .lg-real {
+          border-radius: inherit;
+        }
+
+        .liquid-glass-css {
+          position: relative;
+          isolation: isolate;
+          background:
+            linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02) 45%, rgba(255,255,255,0.07) 100%),
+            rgba(16,16,20,0.55);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(255,255,255,0.16);
+          box-shadow:
+            0 20px 45px rgba(0,0,0,0.5),
+            inset 0 1px 1px rgba(255,255,255,0.35),
+            inset 0 -1px 1px rgba(0,0,0,0.3),
+            inset 1px 0 0 rgba(255,255,255,0.06),
+            inset -1px 0 0 rgba(255,255,255,0.04);
+        }
+        .liquid-glass-css::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          border-radius: inherit;
+          pointer-events: none;
+          background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.22) 47%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.22) 53%, transparent 70%);
+          background-size: 260% 260%;
+          mix-blend-mode: overlay;
+          animation: lg-sheen 10s ease-in-out infinite;
+        }
+        @keyframes lg-sheen {
+          0%, 100% { background-position: 15% 15%; }
+          50% { background-position: 85% 85%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .liquid-glass-css::before { animation: none; }
+        }
+
         body {
           background-color: #050507;
           color: #ffffff;
@@ -117,8 +171,6 @@
     }
 
     .glass-login-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.16);
       color: #ffffff;
       padding: 0.65rem 1.6rem;
       font-size: 0.85rem;
@@ -126,17 +178,12 @@
       letter-spacing: 0.05em;
       border-radius: 9999px;
       cursor: pointer;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       outline: none;
     }
 
     .glass-login-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.12),
                   inset 0 0 10px rgba(255, 255, 255, 0.08);
       transform: translateY(-1px);
@@ -160,6 +207,7 @@
     }
 
     .glass-title-card {
+      position: relative;
       width: 100%;
       max-width: 1080px;
       display: grid;
@@ -167,12 +215,15 @@
       gap: 3.5rem;
       align-items: center;
       padding: 3rem;
-      background: rgba(18, 18, 22, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 24px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+      /* Real liquid-glass refraction is painted behind this by
+         upgradeToLiquidGlass() once the layout settles; this flat fallback
+         only shows if WebGL/html2canvas fails to load. */
+      background: rgba(18, 18, 22, 0.45);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
     }
 
     /* Scroll Fade-in Controller */
@@ -424,6 +475,62 @@
       color: #050507;
     }
 
+
+        .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 5, 7, 0.85);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.glass-login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #e2b357;
+}
+
+.security-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#login-msg {
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
     </style>
 </head>
 <body>
@@ -431,8 +538,32 @@
 <canvas id="matrix-canvas"></canvas>
 <header class="header">
     <div class="logo">Dharohar<span>Grid</span></div>
-    <button class="glass-login-btn">Login</button>
+    <button class="glass-login-btn liquid-glass-css">Login</button>
 </header>
+
+<div id="login-modal" class="modal-overlay" style="display: none;">
+    <div class="glass-login-card liquid-glass-css">
+        <h2 class="card-headline">System Access</h2>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Username" autocomplete="off" />
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password" />
+        </div>
+        <div class="input-group security-group">
+            <label id="captcha-question" class="card-category-label"></label>
+            <input type="text" id="security-code" placeholder="Enter answer" autocomplete="off" />
+        </div>
+        <p id="login-msg"></p>
+        <div class="modal-actions">
+            <button id="submit-login" class="dynamic-explore-btn">
+                <span class="btn-text">Authenticate</span>
+                <span class="btn-glow-layer"></span>
+            </button>
+            <button id="close-login" class="glass-login-btn liquid-glass-css" style="margin-left: 10px;">Close</button>
+        </div>
+    </div>
+</div>
 
 <main class="hero-container">
     <div class="hero-badge">
@@ -476,7 +607,7 @@
                     Traverse national monument archives, craft traditions, and epigraphy through a multi-layered knowledge graph engine.
                 </p>
 
-                <button class="dynamic-explore-btn">
+                <button class="dynamic-explore-btn" id="explore-map-btn">
                     <span class="btn-text">Explore</span>
                     <span class="btn-glow-layer"></span>
                 </button>
@@ -492,7 +623,7 @@
                     Uncovering hidden lineage lines and research-grade connections across tangible monuments, craft ecosystems, and oral histories.
                 </p>
 
-                <button class="dynamic-explore-btn dynamic-discover-btn">
+                <button class="dynamic-explore-btn dynamic-discover-btn" id="discover-graph-btn">
                     <span class="btn-text">Discover</span>
                     <span class="btn-glow-layer"></span>
                 </button>
@@ -546,7 +677,7 @@
                     Contextual story synthesis with ambient soundscapes and regional voice delivery across India's cultural nodes.
                 </p>
 
-                <button class="dynamic-explore-btn dynamic-akashvani-btn">
+                <button class="dynamic-explore-btn dynamic-akashvani-btn" id="akashvani-dashboard-btn">
                     <span class="btn-text">Akashvani</span>
                     <span class="btn-glow-layer"></span>
                 </button>
@@ -727,6 +858,10 @@
       },
       { threshold: 0.15 }
     );
+    // Exposed so the liquid-glass upgrade script (end of body) can re-observe
+    // the replacement elements it swaps in — the originals it removes were
+    // already registered above, but a swapped-in node needs to be re-added.
+    window.fadeObserver = fadeObserver;
 
     document.querySelectorAll('.fade-target').forEach((el) => {
       fadeObserver.observe(el);
@@ -817,6 +952,157 @@
         arrangeStack3();
       }, 200);
     });
+
+
+    document.getElementById('explore-map-btn').addEventListener('click', () => {
+        window.location.href = 'map.html';
+    });
+
+    document.getElementById('discover-graph-btn').addEventListener('click', () => {
+        // Discover is a bundled React app (ES modules) — browsers block
+        // those from loading over file://, which would otherwise silently
+        // land the user on a blank white screen. Every other page here is
+        // a plain script and works fine double-clicked, so this is worth
+        // catching explicitly rather than leaving it as a mystery blank page.
+        if (window.location.protocol === 'file:') {
+            alert(
+                "Discover needs to be served over HTTP to run (it's a bundled app; " +
+                "browsers block that when opened directly as a file, unlike the rest " +
+                "of this site).\n\nServe the project from a local server — e.g. run " +
+                "\"python -m http.server\" in the project folder — then open it as " +
+                "http://localhost:<port>/index.html instead."
+            );
+            return;
+        }
+        window.location.href = 'Discover/dist/index.html';
+    });
+
+    document.getElementById('akashvani-dashboard-btn').addEventListener('click', () => {
+        window.location.href = 'akashvani.html';
+    });
+
+    const loginBtn = document.querySelector('.glass-login-btn');
+const loginModal = document.getElementById('login-modal');
+const closeLogin = document.getElementById('close-login');
+const submitLogin = document.getElementById('submit-login');
+const loginMsg = document.getElementById('login-msg');
+
+let failedAttempts = 0;
+let lockoutTime = 0;
+let captchaAnswer = 0;
+
+function generateCaptcha() {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    captchaAnswer = num1 + num2;
+    document.getElementById('captcha-question').textContent = `${num1} + ${num2} = ?`;
+}
+
+loginBtn.addEventListener('click', () => {
+    loginModal.style.display = 'flex';
+    generateCaptcha();
+});
+
+closeLogin.addEventListener('click', () => {
+    loginModal.style.display = 'none';
+    loginMsg.textContent = '';
+});
+
+submitLogin.addEventListener('click', () => {
+    if (Date.now() < lockoutTime) {
+        const remaining = Math.ceil((lockoutTime - Date.now()) / 1000);
+        loginMsg.style.color = '#ff4d4d';
+        loginMsg.textContent = `Rate limit exceeded. Try again in ${remaining}s.`;
+        return;
+    }
+
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    const code = parseInt(document.getElementById('security-code').value);
+
+    if (code !== captchaAnswer) {
+        handleFailedAttempt("Invalid security code.");
+        return;
+    }
+
+    if (user === "Admin" && pass === "abcd1234") {
+        loginMsg.style.color = '#4dff88';
+        loginMsg.textContent = "Authentication successful. Redirecting to dashboard…";
+        failedAttempts = 0;
+        // Lightweight session flag only — this project has no real backend
+        // auth (see Backend/Obsidian Backend's submissions router docstring),
+        // so this gates admin-dashboard.html from casual direct navigation,
+        // not from anyone who'd bother reading the source.
+        sessionStorage.setItem('dg_admin_session', String(Date.now()));
+        setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 900);
+    } else {
+        handleFailedAttempt("Invalid credentials.");
+    }
+});
+
+function handleFailedAttempt(msg) {
+    failedAttempts++;
+    loginMsg.style.color = '#ff4d4d';
+
+    if (failedAttempts >= 3) {
+        lockoutTime = Date.now() + 30000; // 30-second lockout
+        loginMsg.textContent = `Too many attempts. Locked out for 30s.`;
+        failedAttempts = 0;
+    } else {
+        loginMsg.textContent = `${msg} Attempts remaining: ${3 - failedAttempts}`;
+    }
+    generateCaptcha();
+    document.getElementById('security-code').value = '';
+}
+</script>
+
+<!-- Real liquid-glass refraction (github.com/dashersw/liquid-glass-js) for
+     the always-visible showcase panels. Progressive enhancement: if either
+     script fails to load (offline, WebGL unavailable), the panels simply
+     keep the flat CSS fallback baked into their stylesheet rules above. -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/dashersw/liquid-glass-js@main/container.js"></script>
+<script>
+(function () {
+    if (typeof Container !== 'function' || typeof html2canvas !== 'function') return;
+
+    function upgrade(selector, opts) {
+        document.querySelectorAll(selector).forEach((original) => {
+            try {
+                const glass = new Container(opts);
+                original.classList.forEach((c) => glass.element.classList.add(c));
+                glass.element.classList.add('lg-real');
+                const inlineStyle = original.getAttribute('style');
+                if (inlineStyle) {
+                    glass.element.setAttribute(
+                        'style',
+                        (glass.element.getAttribute('style') || '') + ';' + inlineStyle
+                    );
+                }
+                while (original.firstChild) glass.element.appendChild(original.firstChild);
+                original.replaceWith(glass.element);
+                if (typeof glass.updateSizeFromDOM === 'function') glass.updateSizeFromDOM();
+                // The scroll fade-in observer only knows about the original
+                // node; re-register the swapped-in element so it still
+                // fades into view (see window.fadeObserver above).
+                if (window.fadeObserver && (glass.element.classList.contains('fade-target') || glass.element.classList.contains('slide-target'))) {
+                    window.fadeObserver.observe(glass.element);
+                }
+            } catch (err) {
+                console.warn('[liquid-glass] upgrade skipped for', selector, err);
+            }
+        });
+    }
+
+    // Wait for the matrix dots + hero text canvases to paint their first
+    // real frame so the WebGL snapshot behind the glass isn't blank.
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            upgrade('.hero-badge', { borderRadius: 9999, type: 'pill', tintOpacity: 0.12 });
+            upgrade('.glass-title-card', { borderRadius: 24, type: 'rounded', tintOpacity: 0.18 });
+        }, 350);
+    });
+})();
 </script>
 </body>
 </html>

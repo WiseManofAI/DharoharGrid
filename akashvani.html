@@ -239,16 +239,44 @@
   /* ask bar */
 
   .ask-bar{
+    position: relative;
+    isolation: isolate;
     margin-top: 46px;
     width: min(620px, 90vw);
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(13, 10, 6, 0.72);
+    background:
+      linear-gradient(135deg, rgba(240,207,131,0.10), rgba(240,207,131,0.01) 45%, rgba(240,207,131,0.05) 100%),
+      rgba(13, 10, 6, 0.72);
     border: 1px solid var(--gold-line);
     border-radius: 999px;
     padding: 8px 8px 8px 22px;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      0 18px 40px rgba(0,0,0,0.5),
+      inset 0 1px 1px rgba(240,207,131,0.25),
+      inset 0 -1px 1px rgba(0,0,0,0.35);
+  }
+  .ask-bar::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 30%, rgba(240,207,131,0.16) 47%, rgba(240,207,131,0.28) 50%, rgba(240,207,131,0.16) 53%, transparent 70%);
+    background-size: 260% 260%;
+    mix-blend-mode: overlay;
+    animation: lg-sheen 11s ease-in-out infinite;
+  }
+  @keyframes lg-sheen{
+    0%, 100% { background-position: 15% 15%; }
+    50% { background-position: 85% 85%; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ask-bar::before{ animation: none; }
   }
 
   .ask-bar input{
@@ -1012,11 +1040,17 @@
     }, 3200);
   }
 
-  /* ---------------- ask akashvani demo ---------------- */
+  /* ---------------- ask akashvani ---------------- */
 
   const askForm = document.getElementById("askForm");
   const askInput = document.getElementById("askInput");
   const askFeed = document.getElementById("askFeed");
+
+  // AI Backend (see Backend/AI Backend) — RAG docent grounded in the real
+  // node archive. If it's not running, we fall back to preview replies
+  // below rather than breaking the ask bar.
+  const AI_BACKEND_URL = "http://localhost:8001";
+  const DOCENT_TIMEOUT_MS = 8000;
 
   const demoReplies = [
     "The Sheesh Mahal's mirror work traces back to Mughal glass artisans brought to Agra in the 17th century — I can walk you through that lineage on the Synapses tab.",
@@ -1025,7 +1059,26 @@
   ];
   let replyIndex = 0;
 
-  askForm.addEventListener("submit", (e) => {
+  async function fetchDocentAnswer(query) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), DOCENT_TIMEOUT_MS);
+    try {
+      const res = await fetch(`${AI_BACKEND_URL}/api/v1/docent/ask`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_query: query }),
+        signal: controller.signal
+      });
+      if (!res.ok) throw new Error(`docent backend status ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  askForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const value = askInput.value.trim();
     if (!value) return;
@@ -1037,23 +1090,33 @@
     askInput.value = "";
     askFeed.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
-    setTimeout(() => {
-      const aiMsg = document.createElement("div");
-      aiMsg.className = "ask-msg ai";
-      const label = document.createElement("span");
-      label.className = "ai-label";
-      label.textContent = "Akashvani";
-      const body = document.createElement("span");
+    const live = await fetchDocentAnswer(value);
+
+    const aiMsg = document.createElement("div");
+    aiMsg.className = "ask-msg ai";
+    const label = document.createElement("span");
+    label.className = "ai-label";
+    label.textContent = "Akashvani";
+    const body = document.createElement("span");
+    const tag = document.createElement("span");
+    tag.className = "demo-tag";
+
+    if (live) {
+      body.textContent = live.answer;
+      tag.textContent = live.refused
+        ? "Live docent — no verified match found for that question."
+        : "Live docent — grounded only in verified sources.";
+    } else {
       body.textContent = demoReplies[replyIndex % demoReplies.length];
       replyIndex++;
-      const tag = document.createElement("span");
-      tag.className = "demo-tag";
-      tag.textContent = "Preview response — live docent runs on the deployed RAG engine.";
-      aiMsg.appendChild(label);
-      aiMsg.appendChild(body);
-      aiMsg.appendChild(tag);
-      askFeed.appendChild(aiMsg);
-    }, 650);
+      tag.textContent = "Preview response — live docent backend is offline.";
+    }
+
+    aiMsg.appendChild(label);
+    aiMsg.appendChild(body);
+    aiMsg.appendChild(tag);
+    askFeed.appendChild(aiMsg);
+    askFeed.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 
   /* ---------------- node tabs ---------------- */

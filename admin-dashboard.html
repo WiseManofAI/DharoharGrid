@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — DharoharGrid</title>
+<script>
+  // Lightweight session gate — see index.html's login handler for what sets
+  // this. Not real auth (this project has none), just keeps this page from
+  // showing up to someone who didn't go through the login form.
+  if (!sessionStorage.getItem('dg_admin_session')) {
+    window.location.href = 'index.html';
+  }
+</script>
+<style>
+  :root{
+    --bg:#050507; --gold:#e2b357; --ink:#ffffff; --ink-dim:#9ca3af; --ink-faint:#6d6e75;
+    --glass-bg:rgba(18,18,22,0.62); --glass-bg-solid:rgba(13,13,16,0.78); --glass-border:rgba(255,255,255,0.14);
+    --green:#4dff88; --red:#ff4d4d;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; min-height:100vh; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  .glass{
+    position:relative; isolation:isolate;
+    background:linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01) 45%, rgba(255,255,255,0.05) 100%), var(--glass-bg);
+    border:1px solid var(--glass-border); backdrop-filter:blur(16px) saturate(160%); -webkit-backdrop-filter:blur(16px) saturate(160%);
+    box-shadow:0 20px 40px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.25), inset 0 -1px 1px rgba(0,0,0,0.3);
+  }
+
+  .topbar{
+    position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+    padding:1.25rem 2rem; background:rgba(5,5,7,0.85); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .brand{ font-size:0.95rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; }
+  .brand span{ color:var(--gold); }
+  .topbar-actions{ display:flex; gap:10px; }
+  .pill-btn{
+    padding:0.55rem 1.2rem; border-radius:9999px; border:1px solid var(--glass-border);
+    background:rgba(255,255,255,0.05); color:var(--ink); font-size:0.8rem; font-weight:500;
+    transition:all .25s ease;
+  }
+  .pill-btn:hover{ border-color:rgba(255,255,255,0.35); background:rgba(255,255,255,0.1); }
+
+  main{ max-width:920px; margin:0 auto; padding:2rem; }
+
+  .status-tabs{ display:flex; gap:8px; margin-bottom:1.75rem; }
+  .status-tab{
+    padding:0.55rem 1.1rem; border-radius:9999px; border:1px solid var(--glass-border);
+    background:transparent; color:var(--ink-dim); font-size:0.8rem; font-weight:600;
+    letter-spacing:0.03em; text-transform:uppercase;
+  }
+  .status-tab.active{ background:var(--gold); color:#050507; border-color:var(--gold); }
+
+  .backend-warning{
+    padding:1rem 1.25rem; border-radius:12px; border:1px solid rgba(255,77,77,0.3);
+    background:rgba(255,77,77,0.08); color:#ffb3b3; font-size:0.85rem; margin-bottom:1.5rem; display:none;
+  }
+  .backend-warning.show{ display:block; }
+
+  .empty-state{ text-align:center; padding:4rem 1rem; color:var(--ink-faint); font-size:0.9rem; }
+
+  .submission-grid{ display:flex; flex-direction:column; gap:1rem; }
+  .submission-card{ border-radius:18px; padding:1.5rem; display:grid; grid-template-columns:120px 1fr; gap:1.25rem; }
+  .submission-card.no-photo{ grid-template-columns:1fr; }
+  .s-photo{ width:120px; height:120px; border-radius:12px; object-fit:cover; border:1px solid var(--glass-border); }
+  .s-photo-placeholder{ width:120px; height:120px; border-radius:12px; border:1px dashed var(--glass-border);
+    display:flex; align-items:center; justify-content:center; color:var(--ink-faint); font-size:0.7rem; text-align:center; padding:0.5rem; }
+
+  .s-title{ font-size:1.05rem; font-weight:700; margin:0 0 0.35rem; }
+  .s-meta{ font-size:0.72rem; color:var(--ink-faint); margin-bottom:0.7rem; }
+  .s-desc{ font-size:0.85rem; color:var(--ink-dim); line-height:1.55; margin-bottom:1rem; max-height:6.5em; overflow-y:auto; }
+
+  .s-row{ display:flex; gap:10px; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; }
+  .s-row label{ font-size:0.68rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); }
+  .s-row select{
+    padding:0.4rem 0.7rem; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border);
+    border-radius:8px; color:#fff; font-size:0.78rem; font-family:inherit;
+  }
+
+  .tag-editor{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .tag-chip{
+    display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:9999px;
+    background:rgba(226,179,87,0.15); border:1px solid rgba(226,179,87,0.35); color:var(--gold);
+    font-size:0.72rem;
+  }
+  .tag-chip button{ background:none; border:none; color:var(--gold); font-size:0.85rem; line-height:1; padding:0; }
+  .tag-add-input{
+    padding:4px 10px; background:rgba(255,255,255,0.05); border:1px dashed var(--glass-border);
+    border-radius:9999px; color:#fff; font-size:0.72rem; width:110px; outline:none;
+  }
+  .tag-add-input:focus{ border-color:var(--gold); }
+
+  .s-actions{ display:flex; gap:10px; margin-top:1.1rem; }
+  .s-actions button{
+    padding:0.55rem 1.2rem; border-radius:9999px; font-size:0.8rem; font-weight:600; border:1px solid var(--glass-border);
+    background:transparent; color:var(--ink);
+  }
+  .approve-btn{ background:var(--green) !important; color:#050507 !important; border:none !important; }
+  .reject-btn{ border-color:rgba(255,77,77,0.4) !important; color:#ffb3b3 !important; }
+  .s-actions button:disabled{ opacity:0.5; cursor:not-allowed; }
+  .s-status-msg{ font-size:0.75rem; margin-top:0.6rem; min-height:1.1em; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">DHAROHAR<span>GRID</span> · ADMIN</div>
+  <div class="topbar-actions">
+    <a class="pill-btn" href="index.html">← Site</a>
+    <button class="pill-btn" id="logout-btn">Log out</button>
+  </div>
+</div>
+
+<main>
+  <div class="status-tabs">
+    <button class="status-tab active" data-status="pending">Pending</button>
+    <button class="status-tab" data-status="approved">Approved</button>
+    <button class="status-tab" data-status="rejected">Rejected</button>
+  </div>
+
+  <div class="backend-warning" id="backend-warning">
+    Can't reach the Obsidian Backend at <code id="backend-url-readout"></code>. Start it (see
+    Backend/README.md) to review submissions.
+  </div>
+
+  <div class="submission-grid" id="submission-grid"></div>
+  <p class="empty-state" id="empty-state" style="display:none;">Nothing here yet.</p>
+</main>
+
+<script>
+  const OBSIDIAN_BACKEND_URL = 'http://localhost:8003';
+  const FALLBACK_CATEGORIES = [
+    'TANGIBLE_FORT','TANGIBLE_CASTLE','TANGIBLE_ASI_PROTECTED','TANGIBLE_CITY_GATE',
+    'TANGIBLE_STEPWELL','TANGIBLE_TOMB','TANGIBLE_MEMORIAL','TANGIBLE_ARCHAEOLOGICAL_SITE',
+    'TANGIBLE_RUINS','TANGIBLE_MANOR','TANGIBLE_WAYSIDE_SHRINE','TANGIBLE_HERITAGE',
+    'TANGIBLE_MONUMENT','TANGIBLE_BUILDING',
+    'INTANGIBLE_FESTIVAL','INTANGIBLE_MUSIC','INTANGIBLE_DANCE','INTANGIBLE_CRAFT',
+    'GASTRONOMY_OR_CRAFT_GI_TAG','GASTRONOMY_HERITAGE','GASTRONOMY_FESTIVAL'
+  ];
+  let categories = FALLBACK_CATEGORIES;
+
+  document.getElementById('backend-url-readout').textContent = OBSIDIAN_BACKEND_URL;
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    sessionStorage.removeItem('dg_admin_session');
+    window.location.href = 'index.html';
+  });
+
+  function prettyCategoryLabel(cat){
+    return cat.split('_').map(w => (w === 'ASI' || w === 'GI') ? w : w.charAt(0) + w.slice(1).toLowerCase()).join(' ');
+  }
+  function esc(s){
+    return (s == null ? '' : String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  fetch(`${OBSIDIAN_BACKEND_URL}/api/v1/submissions/categories`)
+    .then(res => res.ok ? res.json() : Promise.reject())
+    .then(cats => { if (Array.isArray(cats) && cats.length) categories = cats; })
+    .catch(() => {});
+
+  const grid = document.getElementById('submission-grid');
+  const emptyState = document.getElementById('empty-state');
+  const backendWarning = document.getElementById('backend-warning');
+  const tabs = document.querySelectorAll('.status-tab');
+  let currentStatus = 'pending';
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.toggle('active', t === tab));
+      currentStatus = tab.dataset.status;
+      loadSubmissions();
+    });
+  });
+
+  async function loadSubmissions(){
+    grid.innerHTML = '';
+    emptyState.style.display = 'none';
+    backendWarning.classList.remove('show');
+    try {
+      const res = await fetch(`${OBSIDIAN_BACKEND_URL}/api/v1/submissions?status=${currentStatus}`);
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      const submissions = await res.json();
+      if (!submissions.length) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      submissions.forEach(s => grid.appendChild(renderCard(s)));
+    } catch (err) {
+      backendWarning.classList.add('show');
+    }
+  }
+
+  function renderCard(submission){
+    const card = document.createElement('div');
+    card.className = 'submission-card glass' + (submission.photo_url ? '' : ' no-photo');
+
+    const photoHtml = submission.photo_url
+      ? `<img class="s-photo" src="${esc(submission.photo_url)}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'s-photo-placeholder',textContent:'No image'}))">`
+      : '';
+
+    const catOptions = categories.map(c =>
+      `<option value="${c}" ${c === submission.category ? 'selected' : ''}>${prettyCategoryLabel(c)}</option>`
+    ).join('');
+
+    const locText = (submission.latitude != null && submission.longitude != null)
+      ? `${submission.latitude.toFixed(4)}, ${submission.longitude.toFixed(4)}`
+      : 'no location';
+
+    card.innerHTML = `
+      ${photoHtml}
+      <div>
+        <p class="s-title">${esc(submission.title)}</p>
+        <p class="s-meta">${esc(submission.contributor_name || 'Anonymous')} · ${locText} · ${new Date(submission.created_at).toLocaleDateString()}</p>
+        <p class="s-desc">${esc(submission.description)}</p>
+        <div class="s-row">
+          <label>Category</label>
+          <select class="cat-select">${catOptions}</select>
+        </div>
+        <div class="s-row">
+          <label>Tags</label>
+          <div class="tag-editor" data-tags='${esc(JSON.stringify(submission.tags || []))}'></div>
+        </div>
+        ${submission.status === 'pending' ? `
+          <div class="s-actions">
+            <button class="approve-btn" type="button">Approve</button>
+            <button class="reject-btn" type="button">Reject</button>
+          </div>
+        ` : `<p class="s-meta">Reviewed by ${esc(submission.reviewed_by || '—')}${submission.promoted_node_id ? ` · node: ${esc(submission.promoted_node_id)}` : ''}</p>`}
+        <p class="s-status-msg"></p>
+      </div>
+    `;
+
+    const catSelect = card.querySelector('.cat-select');
+    catSelect.addEventListener('change', () => patchSubmission(submission.submission_id, { category: catSelect.value }));
+
+    renderTagEditor(card.querySelector('.tag-editor'), submission.submission_id, submission.tags || []);
+
+    if (submission.status === 'pending') {
+      const statusMsg = card.querySelector('.s-status-msg');
+      const approveBtn = card.querySelector('.approve-btn');
+      const rejectBtn = card.querySelector('.reject-btn');
+
+      approveBtn.addEventListener('click', async () => {
+        approveBtn.disabled = true;
+        rejectBtn.disabled = true;
+        statusMsg.style.color = 'var(--ink-faint)';
+        statusMsg.textContent = 'Running AI evaluation — categorizing, embedding, checking duplicates, forming connections…';
+        try {
+          const res = await fetch(`${OBSIDIAN_BACKEND_URL}/api/v1/submissions/${submission.submission_id}/approve`, { method: 'POST' });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || `status ${res.status}`);
+          statusMsg.style.color = 'var(--green)';
+          statusMsg.textContent = data.status === 'merged'
+            ? `Matched an existing node (${data.merged_into}) — not duplicated.`
+            : `Added as ${data.node_id}, connected to ${data.edges_formed} node(s).`;
+          setTimeout(() => card.remove(), 2200);
+        } catch (err) {
+          statusMsg.style.color = 'var(--red)';
+          statusMsg.textContent = `Approval failed: ${err.message}`;
+          approveBtn.disabled = false;
+          rejectBtn.disabled = false;
+        }
+      });
+
+      rejectBtn.addEventListener('click', async () => {
+        approveBtn.disabled = true;
+        rejectBtn.disabled = true;
+        try {
+          const res = await fetch(`${OBSIDIAN_BACKEND_URL}/api/v1/submissions/${submission.submission_id}/reject`, { method: 'POST' });
+          if (!res.ok) throw new Error(`status ${res.status}`);
+          card.remove();
+        } catch (err) {
+          statusMsg.style.color = 'var(--red)';
+          statusMsg.textContent = `Reject failed: ${err.message}`;
+          approveBtn.disabled = false;
+          rejectBtn.disabled = false;
+        }
+      });
+    }
+
+    return card;
+  }
+
+  function renderTagEditor(container, submissionId, tags){
+    function draw(){
+      container.innerHTML = '';
+      tags.forEach((tag, i) => {
+        const chip = document.createElement('span');
+        chip.className = 'tag-chip';
+        chip.innerHTML = `${esc(tag)} <button type="button" aria-label="Remove tag">&times;</button>`;
+        chip.querySelector('button').addEventListener('click', () => {
+          tags = tags.filter((_, idx) => idx !== i);
+          patchSubmission(submissionId, { tags });
+          draw();
+        });
+        container.appendChild(chip);
+      });
+      const input = document.createElement('input');
+      input.className = 'tag-add-input';
+      input.placeholder = '+ add tag';
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const val = input.value.trim();
+          if (val && !tags.includes(val)) {
+            tags = [...tags, val];
+            patchSubmission(submissionId, { tags });
+            draw();
+          } else {
+            input.value = '';
+          }
+        }
+      });
+      container.appendChild(input);
+    }
+    draw();
+  }
+
+  function patchSubmission(submissionId, patch){
+    fetch(`${OBSIDIAN_BACKEND_URL}/api/v1/submissions/${submissionId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(patch)
+    }).catch(() => { /* best-effort — admin can retry via the field itself */ });
+  }
+
+  loadSubmissions();
+</script>
+</body>
+</html>
