@@ -5,25 +5,42 @@ import SearchBar from "./components/SearchBar";
 import GraphCanvas from "./components/GraphCanvas";
 import NodeDetailView from "./components/NodeDetailView";
 import MatrixBackground from "./components/MatrixBackground";
+import Legend from "./components/Legend";
 import { useDharoharData } from "./hooks/useDharoharData";
 
-// Where the "Back" button returns to — the parent site's Discover section.
-// Swap for a router navigate() if this app is mounted inside the same SPA
-// instead of being linked to as a standalone deployment.
-const PARENT_SITE_URL = "/index.html";
+// Where the "Back" button returns to — the parent DharoharGrid site.
+// This app is built to Discover/dist/ and linked to from the root
+// index.html's Discover button, so it's two directories up from there.
+const PARENT_SITE_URL = "../../index.html";
 
 export default function App() {
-  const { nodes, edges, loading, usingMockData } = useDharoharData();
+  const { nodes, edges, loading, usingLiveBackend } = useDharoharData();
   const [view, setView] = useState("graph"); // "graph" | "text"
   const [activeNodeId, setActiveNodeId] = useState(null);
   const graphRef = useRef(null);
 
-  const activeNode = useMemo(
-    () => nodes.find((n) => n.id === activeNodeId) ?? null,
-    [nodes, activeNodeId]
-  );
+  const nodesById = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
+  const activeNode = activeNodeId ? nodesById.get(activeNodeId) ?? null : null;
 
-  function handleNodeClick(nodeId) {
+  const edgesByNode = useMemo(() => {
+    const map = new Map();
+    nodes.forEach((n) => map.set(n.id, []));
+    edges.forEach((e) => {
+      map.get(e.source)?.push(e);
+      map.get(e.target)?.push(e);
+    });
+    return map;
+  }, [nodes, edges]);
+
+  const tierCounts = useMemo(() => {
+    const counts = { verified: 0, source_supported: 0, potential: 0 };
+    edges.forEach((e) => {
+      if (counts[e.tier] !== undefined) counts[e.tier] += 1;
+    });
+    return counts;
+  }, [edges]);
+
+  function openNode(nodeId) {
     setActiveNodeId(nodeId);
     setView("text");
   }
@@ -34,7 +51,6 @@ export default function App() {
 
   function handleBack() {
     if (view === "text") {
-      // Phase 4: Back closes the text view and returns to the graph first.
       setView("graph");
       setActiveNodeId(null);
       return;
@@ -46,12 +62,12 @@ export default function App() {
     <div className="relative flex min-h-screen w-full flex-col items-center bg-void px-4 pb-10 sm:px-8">
       <MatrixBackground />
       <BackButton onClick={handleBack} label={view === "text" ? "Graph" : "Back"} />
-      <Header />
+      <Header nodeCount={nodes.length} edgeCount={edges.length} />
 
-      <main className="relative z-10 mt-4 flex w-full max-w-5xl flex-1 flex-col overflow-hidden rounded-2xl border border-hairline bg-panel shadow-glass backdrop-blur-glass">
+      <main className="liquid-glass relative z-10 mt-4 flex w-full max-w-5xl flex-1 flex-col overflow-hidden rounded-2xl border border-hairline bg-panel shadow-glass backdrop-blur-glass">
         {loading ? (
           <div className="flex flex-1 items-center justify-center text-sm text-white/40">
-            Loading heritage graph…
+            Computing the synapse graph…
           </div>
         ) : (
           <div className="relative h-[70vh] min-h-[420px] w-full">
@@ -64,8 +80,9 @@ export default function App() {
                 ref={graphRef}
                 nodes={nodes}
                 edges={edges}
-                onNodeClick={handleNodeClick}
+                onNodeClick={openNode}
               />
+              <Legend tierCounts={tierCounts} />
               <SearchBar onSearch={handleSearch} />
             </div>
 
@@ -74,18 +91,22 @@ export default function App() {
                 view === "text" ? "opacity-100" : "pointer-events-none opacity-0"
               }`}
             >
-              <NodeDetailView node={activeNode} />
+              <NodeDetailView
+                node={activeNode}
+                edges={activeNode ? edgesByNode.get(activeNode.id) ?? [] : []}
+                nodesById={nodesById}
+                onJump={openNode}
+              />
             </div>
           </div>
         )}
       </main>
 
-      {usingMockData && (
-        <p className="relative z-10 mt-4 text-center text-xs text-white/30">
-          Showing sample data — connect Supabase (see .env.example) to load
-          the live DharoharGrid.
-        </p>
-      )}
+      <p className="relative z-10 mt-4 text-center text-xs text-white/30">
+        {usingLiveBackend
+          ? `${nodes.length} nodes · ${edges.length} AI-formed synapse connections — live from the Obsidian Backend.`
+          : `${nodes.length} nodes · ${edges.length} synapse connections computed locally — start the Obsidian Backend (see Backend/README.md) for the full AI-driven graph.`}
+      </p>
     </div>
   );
 }

@@ -1,85 +1,128 @@
-import { useEffect, useState } from "react";
-import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
-import { mockNodes, mockEdges } from "../lib/mockData";
+import { useEffect, useMemo, useState } from "react";
+import { RAJASTHAN_NODES } from "../lib/rajasthanNodes";
+import { buildSynapseGraph } from "../lib/synapseEngine";
+import { subtypeFor } from "../lib/clusterTaxonomy";
+
+// Obsidian Backend (see Backend/Obsidian Backend) — serves the real,
+// precomputed discovery graph: real embeddings, AI-adjudicated synapse
+// edges, AI-driven dedup, and the full supercluster/subcluster taxonomy.
+const OBSIDIAN_BACKEND_URL = "http://localhost:8003";
+const GRAPH_FETCH_TIMEOUT_MS = 4000;
+
+function subtypeClusterFor(node, clustersById, nodeClusterIds) {
+  for (const clusterId of nodeClusterIds) {
+    const cluster = clustersById.get(clusterId);
+    if (cluster?.kind === "subtype") {
+      return { id: cluster.cluster_id, name: cluster.name };
+    }
+  }
+  // Backend data didn't carry a subtype membership for this node (shouldn't
+  // happen once the pipeline has run, but keep the graph rendering anyway).
+  return subtypeFor(node.category);
+}
+
+/** Transforms the backend's /api/v1/graph/full payload into the
+ * {id, title, group, content, subtypeClusterId, ...} node shape and
+ * {id, source, target, tier, rationale} edge shape the graph UI expects —
+ * the same shape buildSynapseGraph() produces, so GraphCanvas/NodeDetailView
+ * don't need to know which source the data came from. */
+function transformBackendGraph(payload) {
+  const clustersById = new Map((payload.clusters || []).map((c) => [c.cluster_id, c]));
+  const clusterIdsByNode = new Map();
+  (payload.node_clusters || []).forEach(({ node_id, cluster_id }) => {
+    if (!clusterIdsByNode.has(node_id)) clusterIdsByNode.set(node_id, []);
+    clusterIdsByNode.get(node_id).push(cluster_id);
+  });
+
+  const nodes = (payload.nodes || []).map((n) => {
+    const subtype = subtypeClusterFor(n, clustersById, clusterIdsByNode.get(n.node_id) || []);
+    return {
+      id: n.node_id,
+      title: n.title,
+      category: n.category,
+      group: n.heritage_group,
+      era: n.era,
+      lat: n.latitude,
+      lng: n.longitude,
+      trust: n.trust_status,
+      place: n.district,
+      content: n.content,
+      contentSource: n.content_source,
+      photo: n.photo_url,
+      subtypeClusterId: subtype.id,
+      subtypeClusterName: subtype.name,
+    };
+  });
+
+  const edges = (payload.edges || []).map((e) => ({
+    id: `edge-${e.edge_id}`,
+    source: e.source_id,
+    target: e.target_id,
+    tier: e.tier,
+    score: e.score,
+    rationale: e.rationale,
+  }));
+
+  return { nodes, edges, clusters: payload.clusters || [] };
+}
+
+async function fetchBackendGraph() {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), GRAPH_FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(`${OBSIDIAN_BACKEND_URL}/api/v1/graph/full`, {
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error(`graph backend status ${res.status}`);
+    const payload = await res.json();
+    return transformBackendGraph(payload);
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 /**
- * Phase 2: pulls nodes (notes) and edges (linkages) from Supabase on mount.
- *
- * Expected schema (adjust table/column names to match your project, or pass
- * overrides via the `tables` option):
- *
- *   notes  — id (pk), title (text), content (text, markdown)
- *   edges  — id (pk), source (fk -> notes.id), target (fk -> notes.id),
- *            status (text: "confirmed" | "ai_discovered")
- *
- * Falls back to local mock data if Supabase env vars aren't configured yet,
- * so the graph is always inspectable.
+ * Loads the Discovery Graph. Tries the real Obsidian Backend first (a few
+ * seconds' timeout); on any failure — not running, empty, slow — falls back
+ * to computing the same shape of graph entirely client-side from the bundled
+ * dataset (synapseEngine.js), so Discover is always fully functional with
+ * zero backend dependency, just with a lighter-weight connection engine.
  */
-export function useDharoharData({
-  notesTable = "notes",
-  edgesTable = "edges",
-} = {}) {
+export function useDharoharData() {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [usingMockData, setUsingMockData] = useState(!isSupabaseConfigured);
+  const [usingLiveBackend, setUsingLiveBackend] = useState(false);
+
+  const clientSideGraph = useMemo(() => buildSynapseGraph(RAJASTHAN_NODES), []);
 
   useEffect(() => {
     let cancelled = false;
 
-    async function fetchGraphData() {
+    async function load() {
       setLoading(true);
-      setError(null);
-
-      if (!isSupabaseConfigured) {
-        console.log("[DharoharGrid] Using mock nodes:", mockNodes);
-        console.log("[DharoharGrid] Using mock edges:", mockEdges);
-        if (!cancelled) {
-          setNodes(mockNodes);
-          setEdges(mockEdges);
-          setUsingMockData(true);
-          setLoading(false);
-        }
-        return;
-      }
-
       try {
-        const [notesRes, edgesRes] = await Promise.all([
-          supabase.from(notesTable).select("id, title, content"),
-          supabase.from(edgesTable).select("id, source, target, status"),
-        ]);
-
-        if (notesRes.error) throw notesRes.error;
-        if (edgesRes.error) throw edgesRes.error;
-
-        console.log("[DharoharGrid] Fetched nodes:", notesRes.data);
-        console.log("[DharoharGrid] Fetched edges:", edgesRes.data);
-
-        if (!cancelled) {
-          setNodes(notesRes.data ?? []);
-          setEdges(edgesRes.data ?? []);
-          setUsingMockData(false);
-          setLoading(false);
-        }
+        const graph = await fetchBackendGraph();
+        if (cancelled) return;
+        if (!graph.nodes.length) throw new Error("graph backend returned no nodes");
+        setNodes(graph.nodes);
+        setEdges(graph.edges);
+        setUsingLiveBackend(true);
       } catch (err) {
-        console.error("[DharoharGrid] Failed to fetch graph data:", err);
-        if (!cancelled) {
-          // Degrade gracefully to mock data rather than showing an empty graph
-          setNodes(mockNodes);
-          setEdges(mockEdges);
-          setUsingMockData(true);
-          setError(err);
-          setLoading(false);
-        }
+        if (cancelled) return;
+        setNodes(clientSideGraph.nodes);
+        setEdges(clientSideGraph.edges);
+        setUsingLiveBackend(false);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     }
 
-    fetchGraphData();
+    load();
     return () => {
       cancelled = true;
     };
-  }, [notesTable, edgesTable]);
+  }, [clientSideGraph]);
 
-  return { nodes, edges, loading, error, usingMockData };
+  return { nodes, edges, loading, usingLiveBackend, usingMockData: !usingLiveBackend };
 }

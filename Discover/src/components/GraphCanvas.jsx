@@ -8,12 +8,24 @@ import {
 } from "react";
 import ForceGraph2D from "react-force-graph-2d";
 import { forceCollide } from "d3-force-3d";
+import { GROUP_META } from "../lib/textUtils";
 
 const COLOR_DEFAULT = "#ffffff";
-const COLOR_UNCONFIRMED = "#ef4444"; // AI-discovered, not yet confirmed
 const COLOR_HOVER = "#a78bfa"; // violet
-const FADE_ALPHA = 0.12;
+const FADE_ALPHA = 0.1;
 const HOVER_HIT_PADDING = 3; // px added around the drawn node for easier hover
+
+// Confidence-tier palette straight from the Master Spec §5 trust model.
+export const TIER_META = {
+  verified: { color: "#f0cf83", label: "Verified", dash: null, width: 1.6 },
+  source_supported: { color: "#8bb2ff", label: "Source-supported", dash: null, width: 1.3 },
+  potential: { color: "#e2b357", label: "Potential (research lead)", dash: [1, 3], width: 1 },
+  contradictory: { color: "#ef4444", label: "Contradictory", dash: [4, 2], width: 1.3 },
+};
+
+function nodeColor(node) {
+  return GROUP_META[node.group]?.color ?? COLOR_DEFAULT;
+}
 
 /**
  * Phase 3: force-directed graph (react-force-graph-2d) rendering the
@@ -100,18 +112,25 @@ const GraphCanvas = forwardRef(function GraphCanvas(
   }
 
   // Obsidian-like physics: strong-but-bounded repulsion, fixed-length links,
-  // and a collide force so nodes never overlap — plus enough damping that
-  // the layout settles instead of oscillating forever.
+  // a collide force so nodes never overlap, and two nested clustering
+  // forces — a weak pull toward each node's heritage-type centroid (the
+  // three superclusters) and a stronger pull toward its subtype-cluster
+  // centroid (Forts & Castles, GI-Tagged Handicrafts, etc.) — so the
+  // supercluster/subcluster taxonomy is visible directly in the layout,
+  // not just as metadata. Plus enough damping that the layout settles
+  // instead of oscillating forever.
   useEffect(() => {
     const fg = fgRef.current;
     if (!fg) return;
 
-    fg.d3Force("charge")?.strength(-140).distanceMax(600);
-    fg.d3Force("link")?.distance(80).strength(0.6);
+    fg.d3Force("charge")?.strength(-70).distanceMax(400);
+    fg.d3Force("link")?.distance(42).strength(0.55);
     fg.d3Force(
       "collide",
-      forceCollide((node) => nodeRadius(node.id) + 6)
+      forceCollide((node) => nodeRadius(node.id) + 3)
     );
+    fg.d3Force("clusterHeritage", makeClusterForce(() => graphData.nodes, (n) => n.group, 0.02));
+    fg.d3Force("clusterSubtype", makeClusterForce(() => graphData.nodes, (n) => n.subtypeClusterId, 0.09));
     fg.d3ReheatSimulation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graphData]);
@@ -151,20 +170,25 @@ const GraphCanvas = forwardRef(function GraphCanvas(
         onNodeHover={(node) => setHoverId(node ? node.id : null)}
         onNodeClick={(node) => onNodeClick?.(node.id)}
         linkDirectionalParticles={0}
-        warmupTicks={80}
-        cooldownTime={4000}
-        d3AlphaDecay={0.03}
-        d3VelocityDecay={0.45}
+        warmupTicks={60}
+        cooldownTime={3200}
+        d3AlphaDecay={0.045}
+        d3VelocityDecay={0.5}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const r = nodeRadius(node.id);
           const dimmed = isDimmed(node.id);
           const isHovered = node.id === hoverId;
 
-          ctx.globalAlpha = dimmed ? FADE_ALPHA : 1;
+          ctx.globalAlpha = dimmed ? FADE_ALPHA : 0.92;
           ctx.beginPath();
           ctx.arc(node.x, node.y, r, 0, 2 * Math.PI, false);
-          ctx.fillStyle = isHovered ? COLOR_HOVER : COLOR_DEFAULT;
+          ctx.fillStyle = isHovered ? COLOR_HOVER : nodeColor(node);
           ctx.fill();
+          if (isHovered) {
+            ctx.lineWidth = 1.4 / globalScale;
+            ctx.strokeStyle = "rgba(255,255,255,0.85)";
+            ctx.stroke();
+          }
 
           // Label, shown once zoomed in enough (or always for hovered node)
           const showLabel = globalScale > 2.2 || isHovered;
@@ -197,17 +221,54 @@ const GraphCanvas = forwardRef(function GraphCanvas(
         linkColor={(link) => {
           const dimmed = hoverId && !activeLinks?.has(link.id);
           if (hoverId && activeLinks?.has(link.id)) return COLOR_HOVER;
-          const base =
-            link.status === "ai_discovered"
-              ? COLOR_UNCONFIRMED
-              : COLOR_DEFAULT;
-          return dimmed ? `${base}${toAlphaHex(FADE_ALPHA)}` : base;
+          const base = TIER_META[link.tier]?.color ?? COLOR_DEFAULT;
+          return dimmed ? `${base}${toAlphaHex(FADE_ALPHA)}` : `${base}${toAlphaHex(0.65)}`;
         }}
-        linkWidth={(link) => (hoverId && activeLinks?.has(link.id) ? 2 : 1)}
+        linkWidth={(link) =>
+          hoverId && activeLinks?.has(link.id) ? 2.2 : TIER_META[link.tier]?.width ?? 1
+        }
+        linkLineDash={(link) => TIER_META[link.tier]?.dash ?? null}
       />
     </div>
   );
 });
+
+// A minimal d3-force-compatible custom force: each tick, nodes sharing the
+// same keyFn(node) value get nudged toward their group's current centroid.
+// Two of these registered at different strengths (see the physics effect
+// above) is what produces nested supercluster/subcluster visual grouping —
+// this is the standard "cluster force" pattern from d3-force examples,
+// just parameterized by an arbitrary key instead of a hardcoded field.
+function makeClusterForce(getNodes, keyFn, strength) {
+  return function force(alpha) {
+    const nodes = getNodes();
+    const centroids = new Map();
+    for (const n of nodes) {
+      const key = keyFn(n);
+      if (!key || typeof n.x !== "number") continue;
+      let c = centroids.get(key);
+      if (!c) {
+        c = { x: 0, y: 0, count: 0 };
+        centroids.set(key, c);
+      }
+      c.x += n.x;
+      c.y += n.y;
+      c.count += 1;
+    }
+    centroids.forEach((c) => {
+      c.x /= c.count;
+      c.y /= c.count;
+    });
+    for (const n of nodes) {
+      const key = keyFn(n);
+      if (!key || typeof n.x !== "number") continue;
+      const c = centroids.get(key);
+      if (!c) continue;
+      n.vx = (n.vx || 0) + (c.x - n.x) * alpha * strength;
+      n.vy = (n.vy || 0) + (c.y - n.y) * alpha * strength;
+    }
+  };
+}
 
 function toAlphaHex(alpha) {
   return Math.round(alpha * 255)

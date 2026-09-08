@@ -11,7 +11,7 @@ export default function SearchBar({ onSearch, disabled }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="absolute bottom-4 right-4 z-20 flex w-[min(260px,60vw)] items-center gap-2 rounded-full border border-hairline-strong bg-white/[0.06] px-3.5 py-2 backdrop-blur-glass shadow-glass transition-colors focus-within:border-gold/50 sm:bottom-6 sm:right-6"
+      className="liquid-glass absolute bottom-4 right-4 z-20 flex w-[min(260px,60vw)] items-center gap-2 rounded-full border border-hairline-strong bg-white/[0.06] px-3.5 py-2 backdrop-blur-glass shadow-glass transition-colors focus-within:border-gold/50 sm:bottom-6 sm:right-6"
     >
       <svg
         width="15"
